@@ -5,6 +5,20 @@
 
 exports.Formats = [
 
+	// Asdasd
+	///////////////////////////////////////////////////////////////////
+	
+	{
+		section: "Asdasd",
+	},
+	{
+		name: "ASDASD",
+
+		mod: 'asdasd',
+		ruleset: ['Pokemon', 'Endless Battle Clause', 'Team Preview', 'HP Percentage Mod', 'Species Clause', 'Item Clause'],
+		banlist: ['Illegal', 'Uber', 'Bank-Uber', 'Power Construct'],
+	},
+
 	// SM Singles
 	///////////////////////////////////////////////////////////////////
 	{
