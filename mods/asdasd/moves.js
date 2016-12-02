@@ -645,7 +645,6 @@ exports.BattleMovedex = {
 	// Rock Blast
 	// Spike Cannon
 	// Tail Slap
-	// Water Shuriken
 	// Fury Attack
 	// Fury Swipes
 	//		Hits 2 to 5 Times, 25 Base Power, 100% Accuracy, 10 PP
@@ -715,10 +714,11 @@ exports.BattleMovedex = {
 		accuracy: 100,
 		pp: 10,
 	},
+	
+	// Water Shuriken
+	//		10 PP
 	watershuriken: {
 		inherit: true,
-		basePower: 25,
-		accuracy: 100,
 		pp: 10,
 	},
 	
