@@ -2,11 +2,11 @@
 
 exports.BattleAbilities = {
 	// Infiltrator
-	//		Moves ignore Protect, King's Shield, Spiky Shield, Baneful Bunker, Quick Guard, Wide Guard and Crafty Shield, BUT NOT DETECT
-	//		Moves ignore Aurora Veil
+	//		Moves ignore Protect, King's Shield, Spiky Shield, Baneful Bunker, Quick Guard, Wide Guard, Mat Block and Crafty Shield, BUT NOT DETECT
+	//		Moves ignore Aurora Veil and Lucky Chant
 	"infiltrator": {
 		inherit: true,
-		desc: "This Pokemon's moves ignore Substitute, Protect, King's Shield, Spiky Shield, Baneful Bunker, Quick Guard, Wide Guard and Crafty Shield, and the opposing side's Reflect, Light Screen, Aurora Veil, Safeguard, and Mist.",
+		desc: "This Pokemon's moves ignore Substitute, Protect, King's Shield, Spiky Shield, Baneful Bunker, Quick Guard, Wide Guard, Mat Block and Crafty Shield, and the opposing side's Reflect, Light Screen, Aurora Veil, Safeguard, Mist, and Lucky Chant.",
 		shortDesc: "Ignores protective moves on target, except Detect and Endure.",
 	},
 	
@@ -235,8 +235,7 @@ exports.BattleAbilities = {
 		inherit: true,
 		desc: "This Pokemon's moves have their accuracy multiplied by 1.4x. Prevents other Pokemon from lowering this Pokemon's accuracy stat stage. This Pokemon ignores a target's evasiveness stat stage.",
 		shortDesc: "This Pokemon's accuracy is 1.4x, and can't be lowered by others; ignores evasion.",
-		onModifyMove: function (move) {
-			move.ignoreEvasion = true;
+		onSourceModifyAccuracy: function (accuracy) {
 			if (typeof accuracy !== 'number') return;
 			this.debug('keeneye - enhancing accuracy');
 			return accuracy * 1.4;
@@ -284,7 +283,7 @@ exports.BattleAbilities = {
 				}
 				return atk * 2 / 3;
 			},
-			onModifySpe: function (spe, pokemon) {
+			onModifySpA: function (spa, pokemon) {
 				if (pokemon.ability !== 'slowstart') {
 					pokemon.removeVolatile('slowstart');
 					return;
@@ -425,5 +424,26 @@ exports.BattleAbilities = {
 			pokemon.trapped = pokemon.maybeTrapped = false;
 		},
 		rating: 2,
+	},
+	
+	// Skill Link
+	//		Multi-hit moves have perfect accuracy
+	"skilllink": {
+		inherit: true,
+		shortDesc: "This Pokemon's multi-hit attacks have perfect accuracy.",
+		onModifyMove: function (move) {
+			if (move.multihit) {
+				move.accuracy = true;
+			}
+		},
+	},
+	
+	// Battle Bond
+	//		No longer makes Water Shuriken hit 3 times
+	"battlebond": {
+		inherit: true,
+		desc: "If this Pokemon is a Greninja, it transforms into Ash-Greninja after knocking out a Pokemon. As Ash-Greninja, its Water Shuriken has 25 base power.",
+		shortDesc: "After KOing a Pokemon: becomes Ash-Greninja, Water Shuriken: 25 power.",
+		onModifyMove: function () {},
 	},
 };

@@ -3,7 +3,7 @@
 exports.BattleMovedex = {
 	// Stealth Rock
 	//		25% Max HP Damage to Flying-types, 12.5% Otherwise
-	stealthrock: {
+	"stealthrock": {
 		inherit: true,
 		desc: "Sets up a hazard on the foe's side of the field, damaging each foe that switches in. Can be used only once before failing. Foes lose 1/16 of their maximum HP, doubled if they're Flying-type, rounded down. Can be removed from the foe's side if any foe uses Rapid Spin or Defog, or is hit by Defog.",
 		shortDesc: "Hurts foes on switch-in. Doubled on Flying-types.",
@@ -22,7 +22,7 @@ exports.BattleMovedex = {
 	
 	// Rapid Spin
 	//		Removes Hazards before Fainting
-	rapidspin: {
+	"rapidspin": {
 		inherit: true,
 		desc: "If this move is successful, the effects of Leech Seed and partial-trapping moves end for the user, and all hazards are removed from the user's side of the field.",
 		shortDesc: "Frees user from hazards/partial trap/Leech Seed.",
@@ -131,7 +131,9 @@ exports.BattleMovedex = {
 			onStart: function (side) {
 				this.add('-sidestart', side, 'move: Lucky Chant'); // "The Lucky Chant shielded [side.name]'s team from critical hits!"
 			},
-			onCriticalHit: false,
+			onCriticalHit: function (move) {
+				if (!move.infiltrates) {return false;}
+			},
 			onResidualOrder: 21,
 			onResidualSubOrder: 5,
 			onEnd: function (side) {
@@ -143,7 +145,7 @@ exports.BattleMovedex = {
 	// Substitute
 	//		Substitute is hit before Protect, Detect, King's Shield, Spiky Shield, Baneful Bunker, Quick Guard, Wide Guard
 	//		Attacks against a Substitute always Hit
-	substitute: {
+	"substitute": {
 		inherit: true,
 		effect: {
 			onStart: function (target) {
@@ -196,7 +198,7 @@ exports.BattleMovedex = {
 	// Protect
 	//		Substitute is hit before Protect
 	//		Infiltrator ignores Protect
-	protect: {
+	"protect": {
 		inherit: true,
 		desc: "The user is protected from most attacks made by other Pokemon during this turn. Moves from Pokemon with the Ability Infiltrator go through this protection. This move has a 1/X chance of being successful, where X starts at 1 and triples each time this move is successfully used. X resets to 1 if this move fails or if the user's last move used is not Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn.",
 		effect: {
@@ -222,7 +224,7 @@ exports.BattleMovedex = {
 	
 	// Detect
 	//		Substitute is hit before Detect
-	detect: {
+	"detect": {
 		inherit: true,
 		volatileStatus: 'detect',
 		effect: {
@@ -250,7 +252,7 @@ exports.BattleMovedex = {
 	//		Substitute is hit before King's Shield
 	//		Only reduces Attack by 1 Stage
 	//		Infiltrator ignores King's Shield
-	kingsshield: {
+	"kingsshield": {
 		inherit: true,
 		desc: "The user is protected from most attacks made by other Pokemon during this turn, and Pokemon trying to make contact with the user have their Attack lowered by 1 stages. Non-damaging moves and moves from Pokemon with the Ability Infiltrator go through this protection. This move has a 1/X chance of being successful, where X starts at 1 and triples each time this move is successfully used. X resets to 1 if this move fails or if the user's last move used is not Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn.",
 		shortDesc: "Protects from attacks. Contact try: lowers Atk by 1.",
@@ -282,7 +284,7 @@ exports.BattleMovedex = {
 	//		Substitute is hit before Spiky Shield
 	//		Spiky Shield no longer prevent Status Moves
 	//		Infiltrator ignores Spiky Shield
-	spikyshield: {
+	"spikyshield": {
 		inherit: true,
 		desc: "The user is protected from most attacks made by other Pokemon during this turn, and Pokemon making contact with the user lose 1/8 of their maximum HP, rounded down. Non-damaging moves and moves from Pokemon with the Ability Infiltrator go through this protection. This move has a 1/X chance of being successful, where X starts at 1 and triples each time this move is successfully used. X resets to 1 if this move fails or if the user's last move used is not Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn.",
 		effect: {
@@ -307,7 +309,7 @@ exports.BattleMovedex = {
 	//		Substitute is hit before Baneful Bunker
 	//		Baneful Bunker no longer prevent Status Moves
 	//		Infiltrator ignores Baneful Bunker
-	banefulbunker: {
+	"banefulbunker": {
 		inherit: true,
 		desc: "The user is protected from most attacks made by other Pokemon during this turn, and Pokemon making contact with the user become poisoned. Non-damaging moves and moves from Pokemon with the Ability Infiltrator go through this protection. This move has a 1/X chance of being successful, where X starts at 1 and triples each time this move is successfully used. X resets to 1 if this move fails or if the user's last move used is not Baneful Bunker, Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn.",
 		effect: {
@@ -337,7 +339,7 @@ exports.BattleMovedex = {
 	// Quick Guard
 	//		Substitute is hit before Quick Guard
 	//		Infiltrator ignores Quick Guard
-	quickguard: {
+	"quickguard": {
 		inherit: true,
 		desc: "The user and its party members are protected from attacks with original or altered priority greater than 0 made by other Pokemon, including allies, during this turn. Moves from Pokemon with the Ability Infiltrator go through this protection. This move modifies the same 1/X chance of being successful used by other protection moves, where X starts at 1 and triples each time this move is successfully used, but does not use the chance to check for failure. X resets to 1 if this move fails or if the user's last move used is not Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn or if this move is already in effect for the user's side.",
 		effect: {
@@ -368,7 +370,7 @@ exports.BattleMovedex = {
 	// Wide Guard
 	//		Substitute is hit before Wide Guard
 	//		Infiltrator ignores Wide Guard
-	wideguard: {
+	"wideguard": {
 		inherit: true,
 		desc: "The user and its party members are protected from damaging attacks made by other Pokemon, including allies, during this turn that target all adjacent foes or all adjacent Pokemon. Moves from Pokemon with the Ability Infiltrator go through this protection. This move modifies the same 1/X chance of being successful used by other protection moves, where X starts at 1 and triples each time this move is successfully used, but does not use the chance to check for failure. X resets to 1 if this move fails or if the user's last move used is not Detect, Endure, King's Shield, Protect, Quick Guard, Spiky Shield, or Wide Guard. Fails if the user moves last this turn or if this move is already in effect for the user's side.",
 		effect: {
@@ -395,10 +397,38 @@ exports.BattleMovedex = {
 		},
 	},
 	
+	// Mat Block
+	//		Substitute is hit before Mat Block
+	//		Infiltrator ignores Mat Block
+	"matblock": {
+		inherit: true,
+		desc: "The user and its party members are protected from damaging attacks made by other Pokemon, including allies, during this turn. Moves from Pokemon with the Ability Infiltrator go through this protection. Fails unless it is the user's first turn on the field, if the user moves last this turn, or if this move is already in effect for the user's side.",
+		effect: {
+			duration: 1,
+			onStart: function (target, source) {
+				this.add('-singleturn', source, 'Mat Block');
+			},
+			onTryHitPriority: 3,
+			onTryHit: function (target, source, move) {
+				if (!move.flags['protect']) return;
+				if (target.volatiles.substitute || move && (move.target === 'self' || move.category === 'Status') || move.infiltrates) return;
+				this.add('-activate', target, 'Mat Block', move.name);
+				var lockedmove = source.getVolatile('lockedmove');
+				if (lockedmove) {
+					// Outrage counter is reset
+					if (source.volatiles['lockedmove'].duration === 2) {
+						delete source.volatiles['lockedmove'];
+					}
+				}
+				return null;
+			}
+		},
+	},
+	
 	// Crafty Shield
 	//		Substitute is hit before Crafty Shield
 	//		Infiltrator ignores Crafty Shield
-	craftyshield: {
+	"craftyshield": {
 		inherit: true,
 		desc: "The user and its party members are protected from non-damaging attacks made by other Pokemon, including allies, during this turn. Moves from Pokemon with the Ability Infiltrator go through this protection. Fails if the user moves last this turn or if this move is already in effect for the user's side.",
 		effect: {
@@ -417,56 +447,56 @@ exports.BattleMovedex = {
 	
 	// Solar Beam
 	// Solar Blade
-	//		160 Base Power
-	solarbeam: {
+	//		140 Base Power
+	"solarbeam": {
 		inherit: true,
 		isViable: true,
-		basePower: 160,
+		basePower: 140,
 	},
-	solarblade: {
+	"solarblade": {
 		inherit: true,
 		isViable: true,
-		basePower: 160,
+		basePower: 140,
 	},
 	
 	// Sky Attack
-	//		160 Base Power, 100% Accuracy, 10 PP, No Secondary Effect
-	skyattack: {
+	//		140 Base Power, 100% Accuracy, 10 PP, No Secondary Effect
+	"skyattack": {
 		inherit: true,
 		isViable: true,
-		basePower: 160,
+		basePower: 140,
 		accuracy: 100,
 		pp: 10,
 		secondary: null,
 	},
 	
 	// Skull Bash
-	//		160 Base Power
-	skullbash: {
+	//		140 Base Power
+	"skullbash": {
 		inherit: true,
 		isViable: true,
-		basePower: 160,
+		basePower: 140,
 	},
 	
 	// Freeze Shock
 	// Ice Burn
-	//		160 Base Power, 100% Accuracy
-	freezeshock: {
+	//		140 Base Power, 100% Accuracy
+	"freezeshock": {
 		inherit: true,
 		isViable: true,
-		basePower: 160,
+		basePower: 140,
 		accuracy: 100,
 	},
-	iceburn: {
+	"iceburn": {
 		inherit: true,
 		isViable: true,
-		basePower: 160,
+		basePower: 140,
 		accuracy: 100,
 	},
 	
 	// Razor Wind
 	//		Flying-type, 100 Base Power, No High Crit rate
-	razorwind: {
+	"razorwind": {
 		inherit: true,
 		isViable: true,
 		basePower: 100,
@@ -475,11 +505,11 @@ exports.BattleMovedex = {
 	},
 	
 	// Bounce
-	//		120 Base Power, 100% Accuracy
-	bounce: {
+	//		100 Base Power, 100% Accuracy
+	"bounce": {
 		inherit: true,
 		isViable: true,
-		basePower: 120,
+		basePower: 100,
 		accuracy: 100,
 	},
 	
@@ -487,19 +517,19 @@ exports.BattleMovedex = {
 	// Dig
 	// Dive
 	//		120 Base Power, 100% Accuracy
-	fly: {
+	"fly": {
 		inherit: true,
 		isViable: true,
 		basePower: 120,
 		accuracy: 100,
 	},
-	dig: {
+	"dig": {
 		inherit: true,
 		isViable: true,
 		basePower: 120,
 		accuracy: 100,
 	},
-	dive: {
+	"dive": {
 		inherit: true,
 		isViable: true,
 		basePower: 120,
@@ -508,7 +538,7 @@ exports.BattleMovedex = {
 	
 	// Shadow Force
 	//		100 Base Power
-	shadowforce: {
+	"shadowforce": {
 		inherit: true,
 		isViable: true,
 		basePower: 100,
@@ -517,7 +547,7 @@ exports.BattleMovedex = {
 	
 	// Sky Drop
 	//		80 Base Power
-	skydrop: {
+	"skydrop": {
 		inherit: true,
 		basePower: 80,
 	},
@@ -527,40 +557,46 @@ exports.BattleMovedex = {
 	// Blast Burn
 	// Frenzy Plant
 	// Hydro Cannon
+	// Prismatic Laser
 	// Rock Wrecker
 	// Roar of Time
 	//		160 Base Power, 100% Accuracy
-	hyperbeam: {
+	"hyperbeam": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
 	},
-	gigaimpact: {
+	"gigaimpact": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
 	},
-	blastburn: {
+	"blastburn": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
 	},
-	frenzyplant: {
+	"frenzyplant": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
 	},
-	hydrocannon: {
+	"hydrocannon": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
 	},
-	rockwrecker: {
+	"prismaticlaser": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
 	},
-	roaroftime: {
+	"rockwrecker": {
+		inherit: true,
+		basePower: 160,
+		accuracy: 100,
+	},
+	"roaroftime": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
@@ -569,63 +605,63 @@ exports.BattleMovedex = {
 	// Roar
 	// Whirlwind
 	//		Perfect Accuracy
-	roar: {
+	"roar": {
 		inherit: true,
 		accuracy: true,
 	},
-	whirlwind: {
+	"whirlwind": {
 		inherit: true,
 		accuracy: true,
 	},
 	
+	// Bonemerang
 	// Double Hit
 	// Double Kick
-	// Double Slap
 	// Dual Chop
 	// Gear Grind
 	// Wing Attack
 	//		Hits 2 Times, 40 Base Power, 100% Accuracy, 15 PP
-	doublehit: {
+	"bonemerang": {
 		inherit: true,
 		basePower: 40,
 		accuracy: 100,
 		pp: 15,
 	},
-	doublekick: {
+	"doublehit": {
 		inherit: true,
 		basePower: 40,
 		accuracy: 100,
 		pp: 15,
 	},
-	doubleslap: {
+	"doublekick": {
 		inherit: true,
 		basePower: 40,
 		accuracy: 100,
 		pp: 15,
 	},
-	dualchop: {
+	"dualchop": {
 		inherit: true,
 		basePower: 40,
 		accuracy: 100,
 		pp: 15,
 	},
-	geargrind: {
+	"geargrind": {
 		inherit: true,
 		basePower: 40,
 		accuracy: 100,
 		pp: 15,
 	},
-	wingattack: {
+	"wingattack": {
 		inherit: true,
 		basePower: 40,
 		accuracy: 100,
 		pp: 15,
-		multihit: [2, 2],
+		multihit: 2,
 	},
 	
 	// Twineedle
 	//		Hits 2 Times, 30 Base Power, 100% Accuracy, 10 PP, 30% Poison Chance per Hit
-	twineedle: {
+	"twineedle": {
 		inherit: true,
 		basePower: 30,
 		accuracy: 100,
@@ -636,90 +672,164 @@ exports.BattleMovedex = {
 		},
 	},
 	
+	// 2-5 Multihit Moves
+	//		Will always try to hit 5 times, each with its independent accuracy check
+	
 	// Arm Thrust
 	// Barrage
-	// Bullet Seed
+	// Double Slap
+	// Fury Attack
+	//		15 Base Power, 90% Accuracy, 30 PP
+	"armthrust": {
+		inherit: true,
+		basePower: 15,
+		accuracy: 90,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
+		pp: 30,
+	},
+	"barrage": {
+		inherit: true,
+		basePower: 15,
+		accuracy: 90,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
+		pp: 30,
+	},
+	"doubleslap": {
+		inherit: true,
+		basePower: 15,
+		accuracy: 90,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
+		pp: 30,
+	},
+	"furyattack": {
+		inherit: true,
+		basePower: 15,
+		accuracy: 90,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
+		pp: 30,
+	},
+	
+	// Bone Rush
 	// Comet Punch
+	// Fury Swipes
+	//		20 Base Power, 80% Accuracy, 20 PP
+	"bonerush": {
+		inherit: true,
+		basePower: 20,
+		accuracy: 80,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
+		pp: 20,
+	},
+	"cometpunch": {
+		inherit: true,
+		basePower: 20,
+		accuracy: 80,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
+		pp: 20,
+	},
+	"furyswipes": {
+		inherit: true,
+		basePower: 20,
+		accuracy: 80,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
+		pp: 20,
+	},
+	
+	// Bullet Seed
 	// Icicle Spear
 	// Pin Missile
 	// Rock Blast
 	// Spike Cannon
+	//		25 Base Power, 70% Accuracy, 15 PP
+	"bulletseed": {
+		inherit: true,
+		basePower: 25,
+		accuracy: 70,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
+		pp: 15,
+	},
+	"iciclespear": {
+		inherit: true,
+		basePower: 25,
+		accuracy: 70,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
+		pp: 15,
+	},
+	"pinmissile": {
+		inherit: true,
+		basePower: 25,
+		accuracy: 70,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
+		pp: 15,
+	},
+	"rockblast": {
+		inherit: true,
+		basePower: 25,
+		accuracy: 70,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
+		pp: 15,
+	},
+	"spikecannon": {
+		inherit: true,
+		basePower: 25,
+		accuracy: 70,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
+		pp: 15,
+	},
+	
 	// Tail Slap
-	// Fury Attack
-	// Fury Swipes
-	//		Hits 2 to 5 Times, 25 Base Power, 100% Accuracy, 10 PP
-	armthrust: {
+	//		30 Base Power, 60% Accuracy, 10 PP
+	"tailslap": {
 		inherit: true,
-		basePower: 25,
-		accuracy: 100,
-		pp: 10,
-	},
-	barrage: {
-		inherit: true,
-		basePower: 25,
-		accuracy: 100,
-		pp: 10,
-	},
-	bulletseed: {
-		inherit: true,
-		basePower: 25,
-		accuracy: 100,
-		pp: 10,
-	},
-	cometpunch: {
-		inherit: true,
-		basePower: 25,
-		accuracy: 100,
-		pp: 10,
-	},
-	furyattack: {
-		inherit: true,
-		basePower: 25,
-		accuracy: 100,
-		pp: 10,
-	},
-	furyswipes: {
-		inherit: true,
-		basePower: 25,
-		accuracy: 100,
-		pp: 10,
-	},
-	iciclespear: {
-		inherit: true,
-		basePower: 25,
-		accuracy: 100,
-		pp: 10,
-	},
-	pinmissile: {
-		inherit: true,
-		basePower: 25,
-		accuracy: 100,
-		pp: 10,
-	},
-	rockblast: {
-		inherit: true,
-		basePower: 25,
-		accuracy: 100,
-		pp: 10,
-	},
-	spikecannon: {
-		inherit: true,
-		basePower: 25,
-		accuracy: 100,
-		pp: 10,
-	},
-	tailslap: {
-		inherit: true,
-		basePower: 25,
-		accuracy: 100,
+		basePower: 30,
+		accuracy: 60,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
 		pp: 10,
 	},
 	
 	// Water Shuriken
-	//		10 PP
-	watershuriken: {
+	//		15 Base Power, 70% Accuracy, 10 PP, +1 Priority
+	//		25 Base Power when used by Ash-Greninja
+	"watershuriken": {
 		inherit: true,
+		basePower: 15,
+		accuracy: 70,
+		multihit: 5,
+		multiaccuracy: true,
+		tryAllHits: true,
 		pp: 10,
+		basePowerCallback: function (pokemon, target, move) {
+			if (pokemon.template.species === 'Greninja-Ash' && pokemon.hasAbility('battlebond')) {
+				return 25;
+			}
+			return move.basePower;
+		},
 	},
 	
 	// Triple Kick
@@ -736,7 +846,7 @@ exports.BattleMovedex = {
 	
 	// Beat Up
 	//		Base Power Increased, 5 PP
-	beatup: {
+	"beatup": {
 		inherit: true,
 		basePowerCallback: function (pokemon, target) {
 			pokemon.addVolatile('beatup');
@@ -746,74 +856,154 @@ exports.BattleMovedex = {
 		pp: 5,
 	},
 	
-	// Charge Beam
-	//		40 Base Power, 100% Accuracy, 100% Chance to increase the user's Special Attack by 1 Stage
-	chargebeam: {
+	// Draining Moves
+	//		Descriptions updated, due to Big Root changes
+	
+	// Draining Kiss
+	// Drain Punch
+	// Giga Drain
+	// Horn Leech
+	// Leech Life
+	// Parabolic Charge
+	//		80 Base Power, Drains 50% of Damage Dealt
+	"drainingkiss": {
 		inherit: true,
-		accuracy: 100,
+		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
+		shortDesc: "User recovers 50% of the damage dealt.",
+		basePower: 80,
+		drain: [1, 2],
+	},
+	"drainpunch": {
+		inherit: true,
+		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
+		basePower: 80,
+		drain: [1, 2],
+	},
+	"gigadrain": {
+		inherit: true,
+		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
+		basePower: 80,
+		drain: [1, 2],
+	},
+	
+	"hornleech": {
+		inherit: true,
+		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
+		basePower: 80,
+		drain: [1, 2],
+	},
+	"leechlife": {
+		inherit: true,
+		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
+		basePower: 80,
+		drain: [1, 2],
+	},
+	"paraboliccharge": {
+		inherit: true,
+		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
+		basePower: 80,
+		drain: [1, 2],
+	},
+	
+	// Mega Drain
+	//		60 Base Power, Drains 50% of Damage Dealt
+	"megadrain": {
+		inherit: true,
+		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
+		basePower: 60,
+		drain: [1, 2],
+	},
+	
+	// Dream Eater
+	//		120 Base Power, Drains 50% of Damage Dealt
+	"dreameater": {
+		inherit: true,
+		desc: "The target is unaffected by this move unless it is asleep. The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
+		basePower: 120,
+		drain: [1, 2],
+	},
+	
+	// Absorb
+	//		40 Base Power, 20 PP, Drains 75% of Damage Dealt
+	//		Deals double damage against targets under the effects of Leech Seed
+	"absorb": {
+		inherit: true,
 		basePower: 40,
-		desc: "Has a 100% chance to raise the user's Special Attack by 1 stage.",
-		shortDesc: "100% chance to raise the user's Sp. Atk by 1.",
-		secondary: {
-			chance: 100,
-			self: {
-				boosts: {
-					spa: 1,
-				},
+		basePowerCallback: function (pokemon, target, move) {
+			if (target.volatiles['leechseed']) return move.basePower * 2;
+			return move.basePower;
+		},
+		desc: "Power doubles if the target is under the effects of Leech Seed. The user recovers 3/4 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
+		shortDesc: "2x Power if foe afflicted by Leech Seed; Recovers 75% of the damage dealt.",
+		pp: 20,
+		drain: [3, 4],
+	},
+	
+	// Oblivion Wing
+	//		80 Base Power, Drains 100% of Damage Dealt
+	"oblivionwing": {
+		inherit: true,
+		desc: "The user recovers all the HP lost by the target. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
+		shortDesc: "User recovers 100% of the damage dealt.",
+		drain: [1, 1],
+	},
+	
+	// Aqua Ring
+	// Ingrain
+	//		Heal 12.5% Max HP each turn
+	//		Descriptions updated, due to Big Root changes
+	"aquaring": {
+		inherit: true,
+		desc: "The user has 1/8 of its maximum HP, rounded down, restored at the end of each turn while it remains active. If Big Root is held by the recipient, the HP recovered is 1.5x normal, rounded half down. If the user uses Baton Pass, the replacement will receive the healing effect.",
+		shortDesc: "User recovers 1/8 max HP per turn.",
+		effect: {
+			onStart: function (pokemon) {
+				this.add('-start', pokemon, 'Aqua Ring');
+			},
+			onResidualOrder: 6,
+			onResidual: function (pokemon) {
+				this.heal(pokemon.maxhp / 8);
 			},
 		},
 	},
-	// Power-Up Punch
-	//		10 PP
-	poweruppunch: {
+	"ingrain": {
 		inherit: true,
-		pp: 10,
+		desc: "The user has 1/8 of its maximum HP restored at the end of each turn, but it is prevented from switching out and other Pokemon cannot force the user to switch out. If Big Root is held by the recipient, the HP recovered is 1.5x normal, rounded half down. The user can still switch out if it uses Baton Pass, Parting Shot, U-turn, or Volt Switch. If the user leaves the field using Baton Pass, the replacement will remain trapped and still receive the healing effect. During the effect, the user can be hit normally by Ground-type attacks and be affected by Spikes, Toxic Spikes, and Sticky Web, even if the user is a Flying type or has the Ability Levitate.",
+		shortDesc: "User recovers 1/8 max HP per turn. Traps user.",
+		effect: {
+			onStart: function (pokemon) {
+				this.add('-start', pokemon, 'move: Ingrain');
+			},
+			onResidualOrder: 7,
+			onResidual: function (pokemon) {
+				this.heal(pokemon.maxhp / 8);
+			},
+			onTrapPokemon: function (pokemon) {
+				pokemon.tryTrap();
+			},
+			// groundedness implemented in battle.engine.js:BattlePokemon#isGrounded
+			onDragOut: function (pokemon) {
+				this.add('-activate', pokemon, 'move: Ingrain');
+				return null;
+			},
+		},
 	},
 	
-	// Jump Kick
-	//		90% Accuracy
-	jumpkick: {
+	// Leech Seed
+	// Strength Sap
+	//		Descriptions updated, due to Big Root changes
+	"leechseed": {
 		inherit: true,
-		accuracy: 90,
+		desc: "The Pokemon at the user's position steals 1/8 of the target's maximum HP, rounded down, at the end of each turn. If Big Root is held by the recipient, the HP recovered is 1.5x normal, rounded half down. If the target uses Baton Pass, the replacement will continue being leeched. If the target switches out or uses Rapid Spin, the effect ends. Grass-type Pokemon are immune to this move on use, but not its effect.",
 	},
-	
-	// High Jump Kick
-	//		80% Accuracy
-	highjumpkick: {
+	"strengthsap": {
 		inherit: true,
-		accuracy: 80,
-	},
-	
-	// Close Combat
-	// Focus Blast
-	//		100 Base Power
-	closecombat: {
-		inherit: true,
-		basePower: 100,
-	},
-	focusblast: {
-		inherit: true,
-		basePower: 100,
-	},
-	
-	// Parabolic Charge
-	//		75 Base Power
-	paraboliccharge: {
-		inherit: true,
-		basePower: 75,
-	},
-	
-	// Draining Kiss
-	//		75 Base Power, Drains 50% of Damage Dealt
-	drainingkiss: {
-		inherit: true,
-		basePower: 75,
-		drain: [1, 2],
+		desc: "The user restores its HP equal to the target's Attack stat, calculated with its stat stage, then lowers the target's Attack by 1 stage. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
 	},
 	
 	// Astonish
 	//		Now a Ghost-type Fake Out
-	astonish: {
+	"astonish": {
 		inherit: true,
 		basePower: 40,
 		desc: "Has a 100% chance to flinch the target. Fails unless it is the user's first turn on the field.",
@@ -834,9 +1024,105 @@ exports.BattleMovedex = {
 		},
 	},
 	
+	// Spite
+	//		Reduces PP from the target's last used move by 10
+	"spite": {
+		inherit: true,
+		desc: "Causes the target's last move used to lose 10 PP. Fails if the target has not made a move, if the move has 0 PP, or if it no longer knows the move.",
+		shortDesc: "Lowers the PP of the target's last move by 10.",
+		onHit: function (target) {
+			if (target.deductPP(target.lastMove, 10)) {
+				this.add("-activate", target, 'move: Spite', this.getMove(target.lastMove).name, 10);
+				return;
+			}
+			return false;
+		},
+	},
+	
+	// Grudge
+	//		Until the next turn, if an opponent knocks the user out, they lose half of all their remaining PP, rounded up
+	"grudge": {
+		inherit: true,
+		desc: "Until the user's next turn, if a foe's attack knocks the user out, that foe loses half of the remaining PP for all of its moves, rounded up.",
+		shortDesc: "If the user faints, the attacker loses half of all its PP.",
+		effect: {
+			onStart: function (pokemon) {
+				this.add('-singlemove', pokemon, 'Grudge');
+			},
+			onFaint: function (target, source, effect) {
+				if (!source || !effect) return;
+				if (effect.effectType === 'Move' && !effect.isFutureMove) {
+					let worked = false;
+					for (let i in source.moveset) {
+						if (source.moveset[i].pp > 0) {
+							source.moveset[i].pp -= Math.ceil(source.moveset[i].pp / 2);
+							worked = true;
+						}
+					}
+					if (worked) this.add('-message', source.name + " lost half of its PP due to the grudge!");
+				}
+			},
+			onBeforeMovePriority: 100,
+			onBeforeMove: function (pokemon) {
+				this.debug('removing Grudge before attack');
+				pokemon.removeVolatile('grudge');
+			},
+		},
+	},
+	
+	// Charge Beam
+	//		40 Base Power, 100% Accuracy, 100% Chance to increase the user's Special Attack by 1 Stage
+	"chargebeam": {
+		inherit: true,
+		accuracy: 100,
+		basePower: 40,
+		desc: "Has a 100% chance to raise the user's Special Attack by 1 stage.",
+		shortDesc: "100% chance to raise the user's Sp. Atk by 1.",
+		secondary: {
+			chance: 100,
+			self: {
+				boosts: {
+					spa: 1,
+				},
+			},
+		},
+	},
+	// Power-Up Punch
+	//		10 PP
+	"poweruppunch": {
+		inherit: true,
+		pp: 10,
+	},
+	
+	// Jump Kick
+	//		90% Accuracy
+	"jumpkick": {
+		inherit: true,
+		accuracy: 90,
+	},
+	
+	// High Jump Kick
+	//		80% Accuracy
+	"highjumpkick": {
+		inherit: true,
+		accuracy: 80,
+	},
+	
+	// Close Combat
+	// Focus Blast
+	//		100 Base Power
+	"closecombat": {
+		inherit: true,
+		basePower: 100,
+	},
+	"focusblast": {
+		inherit: true,
+		basePower: 100,
+	},
+	
 	// Dizzy Punch
 	//		50% Chance to cause Confusion
-	dizzypunch: {
+	"dizzypunch": {
 		inherit: true,
 		basePower: 80,
 		secondary: {
@@ -847,7 +1133,7 @@ exports.BattleMovedex = {
 	
 	// Relic Song
 	//		80 Base Power, 30% Sleep Chance
-	relicsong: {
+	"relicsong": {
 		inherit: true,
 		basePower: 80,
 		secondary: {
@@ -878,6 +1164,7 @@ exports.BattleMovedex = {
 	// Thief
 	//		70 Base Power, 10 PP
 	//		deals 50% increased damage if foe has an item and user doesn't, then steals it if possible
+	//		Can steal the target's item after using a Gem item
 	"covet": {
 		inherit: true,
 		basePower: 70,
@@ -892,6 +1179,20 @@ exports.BattleMovedex = {
 			if (item.id && !noThief) {
 				return this.chainModify(1.5);
 			}
+		},
+		onHit: function (target, source) {
+			if (source.item) {
+				return;
+			}
+			let yourItem = target.takeItem(source);
+			if (!yourItem) {
+				return;
+			}
+			if (!source.setItem(yourItem)) {
+				target.item = yourItem.id; // bypass setItem so we don't break choicelock or anything
+				return;
+			}
+			this.add('-item', source, yourItem, '[from] move: Covet', '[of] ' + target);
 		},
 	},
 	"thief": {
@@ -909,11 +1210,25 @@ exports.BattleMovedex = {
 				return this.chainModify(1.5);
 			}
 		},
+		onHit: function (target, source) {
+			if (source.item) {
+				return;
+			}
+			let yourItem = target.takeItem(source);
+			if (!yourItem) {
+				return;
+			}
+			if (!source.setItem(yourItem)) {
+				target.item = yourItem.id; // bypass setItem so we don't break choicelock or anything
+				return;
+			}
+			this.add('-item', source, yourItem, '[from] move: Thief', '[of] ' + target);
+		},
 	},
 	
 	// Snore
 	//		90 Base Power
-	snore: {
+	"snore": {
 		inherit: true,
 		basePower: 90,
 	},
@@ -924,51 +1239,57 @@ exports.BattleMovedex = {
 	// Magnet Bomb
 	// Magical Leaf
 	// Shock Wave
+	// Smart Strike
 	// Swift
 	// Disarming Voice
 	// Aura Sphere
 	//		80 Base Power
-	aerialace: {
+	"aerialace": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
 	},
-	feintattack: {
+	"feintattack": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
 	},
-	shadowpunch: {
+	"shadowpunch": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
 	},
-	magnetbomb: {
+	"magnetbomb": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
 	},
-	magicalleaf: {
+	"magicalleaf": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
 	},
-	shockwave: {
+	"shockwave": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
 	},
-	swift: {
+	"smartstrike": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
 	},
-	disarmingvoice: {
+	"swift": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
 	},
-	aurasphere: {
+	"disarmingvoice": {
+		inherit: true,
+		isViable: true,
+		basePower: 80,
+	},
+	"aurasphere": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
@@ -976,7 +1297,7 @@ exports.BattleMovedex = {
 	
 	// Clear Smog
 	//		65 Base Power
-	clearsmog: {
+	"clearsmog": {
 		inherit: true,
 		isViable: true,
 		basePower: 65,
@@ -984,21 +1305,21 @@ exports.BattleMovedex = {
 	
 	// Water Sport
 	// Mud Sport
-	//		+1 Priority
-	watersport: {
+	//		+2 Priority
+	"watersport": {
 		inherit: true,
 		isViable: true,
-		priority: 1,
+		priority: 2,
 	},
-	mudsport: {
+	"mudsport": {
 		inherit: true,
 		isViable: true,
-		priority: 1,
+		priority: 2,
 	},
 	
 	// Blizzard
 	//		30% Freeze Chance
-	blizzard: {
+	"blizzard": {
 		inherit: true,
 		secondary: {
 			chance: 30,
@@ -1008,7 +1329,7 @@ exports.BattleMovedex = {
 	
 	// Minimize
 	//		Increases Evasion by only 1 Stage
-	minimize: {
+	"minimize": {
 		inherit: true,
 		boosts: {
 			evasion: 1,
@@ -1017,7 +1338,7 @@ exports.BattleMovedex = {
 	
 	// Cut
 	//		60 Base Power, 50% Chance to decrease the target's Defense by 1 Stage
-	cut: {
+	"cut": {
 		inherit: true,
 		basePower: 60,
 		accuracy: 100,
@@ -1031,14 +1352,14 @@ exports.BattleMovedex = {
 	
 	// Rock Smash
 	//		60 Base Power
-	rocksmash: {
+	"rocksmash": {
 		inherit: true,
 		basePower: 60,
 	},
 	
 	// Strength
 	//		30% Chance to increase the user's Attack by 1 Stage
-	strength: {
+	"strength": {
 		inherit: true,
 		secondary: {
 			chance: 30,
@@ -1053,11 +1374,11 @@ exports.BattleMovedex = {
 	// Grass Whistle
 	// Sing
 	//		70% Accuracy
-	grasswhistle: {
+	"grasswhistle": {
 		inherit: true,
 		accuracy: 70,
 	},
-	sing: {
+	"sing": {
 		inherit: true,
 		accuracy: 70,
 	},
@@ -1065,223 +1386,234 @@ exports.BattleMovedex = {
 	// Supersonic
 	// Confuse Ray
 	//		90% Accuracy
-	supersonic: {
+	"supersonic": {
 		inherit: true,
 		accuracy: 90,
 	},
-	confuseray: {
+	"confuseray": {
 		inherit: true,
 		accuracy: 90,
 	},
 	
 	// Many Moves
 	//		Accuracy Rounded up to multiples of 10%
-	boneclub: {
+	"boneclub": {
 		inherit: true,
 		accuracy: 90,
 	},
-	razorshell: {
+	"razorshell": {
 		inherit: true,
 		accuracy: 100,
 	},
-	drillrun: {
+	"drillrun": {
 		inherit: true,
 		accuracy: 100,
 	},
-	vcreate: {
+	"vcreate": {
 		inherit: true,
 		accuracy: 100,
 	},
-	aeroblast: {
+	"aeroblast": {
 		inherit: true,
 		accuracy: 100,
 	},
-	sacredfire: {
+	"sacredfire": {
 		inherit: true,
 		accuracy: 100,
 	},
-	spacialrend: {
+	"spacialrend": {
 		inherit: true,
 		accuracy: 100,
 	},
-	originpulse: {
+	"originpulse": {
 		inherit: true,
 		accuracy: 90,
 	},
-	precipiceblades: {
+	"precipiceblades": {
 		inherit: true,
 		accuracy: 90,
 	},
-	airslash: {
+	"airslash": {
 		inherit: true,
 		accuracy: 100,
 	},
-	rockslide: {
+	"rockslide": {
 		inherit: true,
 		accuracy: 100,
 	},
-	aircutter: {
+	"aircutter": {
 		inherit: true,
 		accuracy: 100,
 	},
-	furycutter: {
+	"furycutter": {
 		inherit: true,
 		accuracy: 100,
 	},
-	flyingpress: {
+	"flyingpress": {
 		inherit: true,
 		accuracy: 100,
 	},
-	crushclaw: {
+	"crushclaw": {
 		inherit: true,
 		accuracy: 100,
 	},
-	razorleaf: {
+	"razorleaf": {
 		inherit: true,
 		accuracy: 100,
 	},
-	stringshot: {
+	"stringshot": {
 		inherit: true,
 		accuracy: 100,
 	},
-	metalclaw: {
+	"metalclaw": {
 		inherit: true,
 		accuracy: 100,
 	},
-	diamondstorm: {
+	"diamondstorm": {
 		inherit: true,
 		accuracy: 100,
 	},
-	snarl: {
+	"snarl": {
 		inherit: true,
 		accuracy: 100,
 	},
-	powerwhip: {
+	"powerwhip": {
 		inherit: true,
 		accuracy: 90,
 	},
-	seedflare: {
+	"seedflare": {
 		inherit: true,
 		accuracy: 90,
 	},
-	willowisp: {
+	"willowisp": {
 		inherit: true,
 		accuracy: 90,
 	},
-	meteormash: {
+	"meteormash": {
 		inherit: true,
 		accuracy: 90,
 	},
-	boltstrike: {
+	"boltstrike": {
 		inherit: true,
 		accuracy: 90,
 	},
-	blueflare: {
+	"blueflare": {
 		inherit: true,
 		accuracy: 90,
 	},
-	dragonrush: {
+	"dragonrush": {
 		inherit: true,
 		accuracy: 80,
 	},
-	rocktomb: {
+	"rocktomb": {
 		inherit: true,
 		accuracy: 100,
 	},
-	fireblast: {
+	"fireblast": {
 		inherit: true,
 		accuracy: 80,
 	},
-	irontail: {
+	"irontail": {
 		inherit: true,
 		accuracy: 80,
 	},
-	magmastorm: {
+	"magmastorm": {
 		inherit: true,
 		accuracy: 80,
 	},
-	megahorn: {
+	"megahorn": {
 		inherit: true,
 		accuracy: 90,
 	},
-	megapunch: {
+	"megapunch": {
 		inherit: true,
 		accuracy: 90,
 	},
-	megakick: {
+	"megakick": {
 		inherit: true,
 		accuracy: 80,
 	},
-	slam: {
+	"slam": {
 		inherit: true,
 		accuracy: 80,
 	},
-	rollingkick: {
+	"rollingkick": {
 		inherit: true,
 		accuracy: 90,
 	},
-	takedown: {
+	"takedown": {
 		inherit: true,
 		accuracy: 90,
 	},
-	mudbomb: {
+	"mudbomb": {
 		inherit: true,
 		accuracy: 90,
 	},
-	mirrorshot: {
+	"mirrorshot": {
 		inherit: true,
 		accuracy: 90,
 	},
-	rockclimb: {
+	"rockclimb": {
 		inherit: true,
 		accuracy: 90,
 	},
-	poisonpowder: {
+	"poisonpowder": {
 		inherit: true,
 		accuracy: 80,
 	},
-	stunspore: {
+	"stunspore": {
 		inherit: true,
 		accuracy: 80,
 	},
-	sleeppowder: {
+	"sleeppowder": {
 		inherit: true,
 		accuracy: 80,
 	},
-	sweetkiss: {
+	"sweetkiss": {
 		inherit: true,
 		accuracy: 80,
 	},
-	lovelykiss: {
+	"lovelykiss": {
 		inherit: true,
 		accuracy: 80,
 	},
-	whirlpool: {
+	"whirlpool": {
 		inherit: true,
 		accuracy: 90,
 	},
-	firespin: {
+	"firespin": {
 		inherit: true,
 		accuracy: 90,
 	},
-	clamp: {
+	"clamp": {
 		inherit: true,
 		accuracy: 90,
 	},
-	sandtomb: {
+	"sandtomb": {
 		inherit: true,
 		accuracy: 90,
 	},
-	bind: {
+	"bind": {
 		inherit: true,
 		accuracy: 90,
 	},
-	screech: {
+	"screech": {
 		inherit: true,
 		accuracy: 90,
 	},
-	metalsound: {
+	"metalsound": {
 		inherit: true,
 		accuracy: 90,
+	},
+	
+	// Toxic
+	//		Fix, due to scripts.js changes
+	"toxic": {
+		inherit: true,
+		onModifyMove: function (move, source) {
+			if (source.hasType('Poison')) {
+				move.accuracy = true;
+			}
+		},
 	},
 };

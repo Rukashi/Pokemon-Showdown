@@ -27,15 +27,32 @@ exports.BattleItems = {
 		},
 	},
 	
+	// Micle Berry
+	//		Increases accuracy by 40% when below 25% health. Single use
+	"micleberry": {
+		inherit: true,
+		desc: "Holder's next move has 1.4x accuracy when at 1/4 max HP or less. Single use.",
+		effect: {
+			duration: 2,
+			onSourceModifyAccuracy: function (accuracy, target, source) {
+				this.add('-enditem', source, 'Micle Berry');
+				source.removeVolatile('micleberry');
+				if (typeof accuracy === 'number') {
+					return accuracy * 1.4;
+				}
+			},
+		},
+	},
+	
 	// Bright Powder
-	//		Reduces foes accuracy by 15%
+	//		Reduces foes accuracy by 20%
 	"brightpowder": {
 		inherit: true,
-		desc: "The accuracy of attacks against the holder is 0.85x.",
+		desc: "The accuracy of attacks against the holder is 0.8x.",
 		onModifyAccuracy: function (accuracy) {
 			if (typeof accuracy !== 'number') return;
 			this.debug('brightpowder - decreasing accuracy');
-			return accuracy * 0.85;
+			return accuracy * 0.8;
 		},
 	},
 	
@@ -57,6 +74,19 @@ exports.BattleItems = {
 	"lightclay": {
 		inherit: true,
 		desc: "Holder's Reflect, Light Screen, Aurora Veil, Safeguard, Mist or Lucky Chant lasts 8 turns.",
+	},
+	
+	// Quick Claw
+	//		If its the user's first turn out, they move first in their priority bracket
+	"quickclaw": {
+		inherit: true,
+		desc: "Holder moves first in its priority bracket if its their first turn out.",
+		onModifyPriority: function (priority, pokemon) {
+			if (pokemon.activeTurns === 1) {
+				this.add('-activate', pokemon, 'item: Quick Claw');
+				return Math.round(priority) + 0.1;
+			}
+		},
 	},
 	
 	// Type-enhancing Items
