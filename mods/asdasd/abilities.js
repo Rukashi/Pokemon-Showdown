@@ -30,32 +30,30 @@ exports.BattleAbilities = {
 	},
 	
 	// Magma Armor
-	//		Reduces damage taken by 12.5%, doubled on Sunny Day
+	//		Reduces damage taken by 25% on Sunny Day
 	//		Imunity to Freeze
 	"magmaarmor": {
 		inherit: true,
-		desc: "This Pokemon takes 12.5% reduced damage, doubled during Sunny Day, and cannot be frozen. Gaining this Ability while frozen cures it.",
-		shortDesc: "Immune to freezing. Takes 12.5% reduced damage, doubled during Sunny Day.",
+		desc: "This Pokemon takes 25% reduced damage during Sunny Day, and cannot be frozen. Gaining this Ability while frozen cures it.",
+		shortDesc: "Immune to freezing. Takes 25% reduced damage during Sunny Day.",
 		onSourceBasePower: function (basePower) {
 			if (this.isWeather(['sunnyday', 'desolateland'])) {
 				return basePower * 3 / 4;
 			}
-			return basePower * 7 / 8;
 		},
 	},
 	
 	// Water Veil
-	//		Reduces damage taken by 12.5%, doubled on Rain Dance
+	//		Reduces damage taken by 25% on Rain Dance
 	//		Imunity to Burn
 	"waterveil": {
 		inherit: true,
 		desc: "This Pokemon takes 12.5% reduced damage, doubled during Rain Dance, and cannot be burned. Gaining this Ability while burned cures it.",
-		shortDesc: "Immune to burn. Takes 12.5% reduced damage, doubled during Rain Dance.",
+		shortDesc: "Immune to burn. Takes 25% reduced damage during Rain Dance.",
 		onSourceBasePower: function (basePower) {
 			if (this.isWeather(['raindance', 'primordialsea'])) {
 				return basePower * 3 / 4;
 			}
-			return basePower * 7 / 8;
 		},
 	},
 	
@@ -74,12 +72,12 @@ exports.BattleAbilities = {
 	},
 	
 	// Sand Veil
-	//		Reduces damage taken by 12.5%, doubled on Sandstorm
+	//		Reduces damage taken by 25% on Sandstorm
 	//		Imunity to Paralysis
 	"sandveil": {
 		inherit: true,
-		desc: "This Pokemon takes 12.5% reduced damage, doubled during Sandstorm, and cannot be paralyzed. Gaining this Ability while paralyzed cures it. This Pokemon takes no damage from Sandstorm.",
-		shortDesc: "Immune to paralysis. Takes 12.5% reduced damage, doubled during Sandstorm.",
+		desc: "This Pokemon takes 25% reduced damage during Sandstorm, and cannot be paralyzed. Gaining this Ability while paralyzed cures it. This Pokemon takes no damage from Sandstorm.",
+		shortDesc: "Immune to paralysis. Takes 25% reduced damage during Sandstorm.",
 		onUpdate: function (pokemon) {
 			if (pokemon.status === 'par') {
 				this.add('-activate', pokemon, 'ability: Sand Veil');
@@ -96,18 +94,17 @@ exports.BattleAbilities = {
 			if (this.isWeather('sandstorm')) {
 				return basePower * 3 / 4;
 			}
-			return basePower * 7 / 8;
 		},
 		onModifyAccuracy: function () {},
 	},
 	
 	// Snow Cloak
-	//		Reduces damage taken by 12.5%, doubled on Hail
+	//		Reduces damage taken by 25% on Hail
 	//		Immunity to Sleep
 	"snowcloak": {
 		inherit: true,
-		desc: "This Pokemon takes 12.5% reduced damage, doubled during Hail, and cannot fall asleep. Gaining this Ability while asleep cures it. This Pokemon takes no damage from Hail.",
-		shortDesc: "Immune to falling asleep. Takes 12.5% reduced damage, doubled during Hail.",
+		desc: "This Pokemon takes 25% reduced damage during Hail, and cannot fall asleep. Gaining this Ability while asleep cures it. This Pokemon takes no damage from Hail.",
+		shortDesc: "Immune to falling asleep. Takes 25% reduced damage during Hail.",
 		onUpdate: function (pokemon) {
 			if (pokemon.status === 'slp') {
 				this.add('-activate', pokemon, 'ability: Snow Cloak');
@@ -124,7 +121,6 @@ exports.BattleAbilities = {
 			if (this.isWeather('hail')) {
 				return basePower * 3 / 4;
 			}
-			return basePower * 7 / 8;
 		},
 		onModifyAccuracy: function () {},
 	},
@@ -143,6 +139,103 @@ exports.BattleAbilities = {
 		rating: 2.5,
 	},
 	
+	// Battle Armor
+	//		Reduces damage taken by 25% of its Lost HP once, then its armor breaks
+	//		Until this Pokemon's armor breaks, it is immune to entry hazard damage
+	//		Armor is restored on switch-in, after hazards damage
+	"battlearmor": {
+		desc: "Damage taken by this Pokemon is reduced by 25% of its missing HP, but its armor is broken as well. On switch-in, this Pokemon takes no entry hazard damage if its armor isn't broken, or restores it if it is.",
+		shortDesc: "Takes 25% lost HP less damage once, or no entry hazard damage on next switch-in.",
+		onStart: function (pokemon) {
+			if (pokemon.brokenArmor) {
+				this.add('-message', pokemon.name + " repaired its Battle Armor!");
+				pokemon.brokenArmor = false;
+			}
+		},
+		onDamage: function (damage, target, source, effect) {
+			if (!target.brokenArmor && effect && effect.id in {spikes:1,stealthrock:1}) {
+				return false;
+			}
+			if (!target.brokenArmor && effect && effect.effectType === 'Move') {
+				this.add('-ability', target, 'Battle Armor');
+				this.add('-message', target.name + "'s Battle Armor broke while reducing the damage!");
+				damage -= Math.floor((target.maxhp - target.hp) / 4);
+				target.brokenArmor = true;
+				if (damage < 0) damage = 0;
+				return damage;
+			}
+		},
+		id: "battlearmor",
+		name: "Battle Armor",
+		rating: 3.5,
+		num: 4,
+	},
+	
+	// Shell Armor
+	//		Until its armor breaks, this Pokemon retreats into its shell while bellow 50% HP, and takes 25% reduced damage
+	//		If this Pokemon uses Shell Smash, its armor breaks
+	//		Armor is restored on switch-out, or when using Withdraw
+	"shellarmor": {
+		desc: "While this Pokemon has 1/2 or less of its maximum HP and its armor isn't broken, it takes 25% reduced damage. Armor breaks if this Pokemon uses Shell Smash, and is restored if it uses Withdraw or switches out.",
+		shortDesc: "Takes -25% damage if low HP. Breaks if using Shell Smash. Restored by Withdraw.",
+		onSourceBasePower: function (basePower, attacker, defender, move) {
+			if (!defender.brokenArmor && defender.hp <= defender.maxhp / 2) {
+				this.add('-ability', defender, 'Shell Armor');
+				this.add('-message', target.name + "'s Shell Armor reduced the damage!");
+				return this.chainModify(0.75);
+			}
+		},
+		onHit: function (target, source, move) {
+			if (!target.brokenArmor && move.id === 'shellsmash') {
+				this.add('-message', target.name + " smashed its Shell Armor!");
+				target.brokenArmor = true;
+			}
+			if (target.brokenArmor && move.id === 'withdraw') {
+				this.add('-message', target.name + " restored its Shell Armor!");
+				target.brokenArmor = false;
+			}
+		},
+		onSwitchOut: function (pokemon) {
+			pokemon.brokenArmor = false;
+		},
+		id: "shellarmor",
+		name: "Shell Armor",
+		rating: 3,
+		num: 75,
+	},
+	
+	// Weak Armor
+	//		Until its armor breaks, this Pokemon takes 25% reduced physical damage
+	//		If this Pokemon loses 25% or more of its max HP from a single move, its armor breaks
+	//		Armor is restored upon using Harden or Iron Defense
+	"weakarmor": {
+		desc: "This Pokemon takes 25% reduced physical damage until its armor breaks. This Pokemon's armor breaks by taking 25% or more of its maximum HP from a single attack, and can then be restored by using Harden or Iron Defense.",
+		shortDesc: "Takes -25% physical damage until armor breaks. Restored by Harden/Iron Defense.",
+		onSourceBasePower: function (basePower, attacker, defender, move) {
+			if (!defender.brokenArmor && this.getCategory(move) === 'Physical') {
+				this.add('-ability', defender, 'Weak Armor');
+				this.add('-message', defender.name + "'s Weak Armor reduced the damage!");
+				return this.chainModify(0.75);
+			}
+		},
+		onAfterDamage: function (damage, target, source, move) {
+			if (!target.brokenArmor && damage >= target.maxhp / 4) {
+				this.add('-message', "It broke " + target.name + "'s Weak Armor!");
+				target.brokenArmor = true;
+			}
+		},
+		onHit: function (target, source, move) {
+			if (target.brokenArmor && move.id in {harden:1, irondefense:1}) {
+				this.add('-message', target.name + " repaired its Weak Armor!");
+				target.brokenArmor = false;
+			}
+		},
+		id: "weakarmor",
+		name: "Weak Armor",
+		rating: 3,
+		num: 133,
+	},
+	
 	// Poison Point
 	// Flame Body
 	// Static
@@ -157,6 +250,7 @@ exports.BattleAbilities = {
 				source.trySetStatus('psn', target);
 			}
 		},
+		rating: 3,
 	},
 	"flamebody": {
 		inherit: true,
@@ -166,6 +260,7 @@ exports.BattleAbilities = {
 				source.trySetStatus('brn', target);
 			}
 		},
+		rating: 3,
 	},
 	"static": {
 		inherit: true,
@@ -175,6 +270,7 @@ exports.BattleAbilities = {
 				source.trySetStatus('par', target);
 			}
 		},
+		rating: 3,
 	},
 	"cutecharm": {
 		inherit: true,
@@ -184,6 +280,7 @@ exports.BattleAbilities = {
 				source.addVolatile('Attract', target);
 			}
 		},
+		rating: 2.5,
 	},
 	"cursedbody": {
 		inherit: true,
@@ -303,42 +400,6 @@ exports.BattleAbilities = {
 		},
 	},
 	
-	// Shell Armor
-	//		Reduces damage taken by 10% of Maximum HP, immune to critical hits
-	//		Removed by Shell Smash
-	"shellarmor": {
-		inherit: true,
-		shortDesc: "Reduces damage taken by 10% Max HP, and cannot be struck by a critical hit.",
-		onDamage: function (damage, target, source, effect) {
-			if (effect && effect.effectType === 'Move') {
-				this.add('-message', "Its damage was reduced by Shell Armor!");
-				damage -= target.maxhp / 10;
-				if (damage < 0) damage = 0;
-				return damage;
-			}
-		},
-		onHit: function (target, source, move) {
-			if (move.id === 'shellsmash') {
-				target.setAbility('');
-			}
-		},
-	},
-	
-	// Battle Armor
-	//		Reduces damage taken by 10% of Maximum HP, immune to critical hits
-	"battlearmor": {
-		inherit: true,
-		shortDesc: "Reduces damage taken by 10% Max HP, and cannot be struck by a critical hit.",
-		onDamage: function (damage, target, source, effect) {
-			if (effect && effect.effectType === 'Move') {
-				this.add('-message', "Its damage was reduced by Battle Armor!");
-				damage -= target.maxhp / 10;
-				if (damage < 0) damage = 0;
-				return damage;
-			}
-		},
-	},
-	
 	// Multiscale
 	//		Reduces damage taken by 33% when at full HP
 	"multiscale": {
@@ -445,5 +506,123 @@ exports.BattleAbilities = {
 		desc: "If this Pokemon is a Greninja, it transforms into Ash-Greninja after knocking out a Pokemon. As Ash-Greninja, its Water Shuriken has 25 base power.",
 		shortDesc: "After KOing a Pokemon: becomes Ash-Greninja, Water Shuriken: 25 power.",
 		onModifyMove: function () {},
+	},
+	
+	// Wonder Skin
+	//		Foe's status moves without perfect accuracy always miss when used on this Pokemon
+	//		Wonder Skin does not prevent moves from hitting a Substitute
+	"wonderskin": {
+		desc: "All opposing non-damaging moves that check accuracy miss when used on this Pokemon.",
+		shortDesc: "Foe's status moves with accuracy checks always miss when used on this Pokemon.",
+		onModifyAccuracy: function (accuracy, target, source, move) {
+			if (!target.volatiles.substitute && source.side !== target.side && move.category === 'Status' && typeof move.accuracy === 'number') {
+				this.add('-activate', target, 'ability: Wonderskin');
+				return 0;
+			}
+		},
+		id: "wonderskin",
+		name: "Wonder Skin",
+		rating: 3.5,
+		num: 147,
+	},
+	
+	// Anticipation
+	//		Anticipates the last move used against it by a foe. If they use the same move again, it will miss
+	//		Anticipation does not activate if the Pokemon is behind a Substitute
+	"anticipation": {
+		desc: "This Pokemon anticipates the last move used against it by an opponent, and is always able to evade it. Doesn't affect moves with perfect accuracy.",
+		shortDesc: "The last move used against this Pokemon by a foe will miss if used again.",
+		onStart: function (pokemon) {
+			if (!pokemon.anticipatedMove) {
+				this.add('-message', pokemon.name + " is anticipating its foe's moves!");
+			} else {
+				this.add('-message', pokemon.name + " is anticipating " + this.getMove(pokemon.anticipatedMove).name + "!");
+			}
+		},
+		onModifyAccuracy: function (accuracy, target, source, move) {
+			if (!target.volatiles.substitute && target.anticipatedMove && source.side !== target.side && move.id === target.anticipatedMove && typeof move.accuracy === 'number') {
+				this.add('-activate', target, 'ability: Anticipation'); // "Pokemon shuddered!" message appears, unfortunatelly
+				accuracy = 0;
+			}
+			target.anticipatedMove = move.id;
+			return accuracy;
+		},
+		id: "anticipation",
+		name: "Anticipation",
+		rating: 3.5,
+		num: 107,
+	},
+	
+	// Adaptability
+	//		Moves that don't match one of the user's types deal 30% increased damage
+	"adaptability": {
+		inherit: true,
+		desc: "This Pokemon's moves that don't match any of its types have their power multiplied by 1.3x.",
+		shortDesc: "This Pokemon's non STAB moves have 1.3x power.",
+		onModifyMove: function (move) {},
+		onBasePower: function (power, attacker, defender, move) {
+			if (!attacker.hasType(move.type)) {
+				return this.chainModify(1.3);
+			}
+		},
+		rating: 3,
+	},
+	
+	// Huge Power
+	//		Increases Attack by 40%
+	"hugepower": {
+		inherit: true,
+		shortDesc: "This Pokemon's Attack is multiplied by 1.4x.",
+		onModifyAtk: function (atk) {
+			return this.chainModify(1.4);
+		},
+		rating: 3.5,
+	},
+	
+	// Pure Power
+	//		Increases both Attack and Special Attack by 20%
+	"purepower": {
+		inherit: true,
+		shortDesc: "This Pokemon's Attack and Special Attack are multiplied by 1.2x.",
+		onModifyAtkPriority: 5,
+		onModifyAtk: function (atk) {
+			return this.chainModify(1.2);
+		},
+		onModifySpAPriority: 5,
+		onModifySpA: function (spa) {
+			return this.chainModify(1.2);
+		},
+		rating: 3.5,
+	},
+	
+	// Moody
+	//		Increases a random stat and decreases another by 1 each, every turn
+	"moody": {
+		inherit: true,
+		desc: "This Pokemon has a random stat raised by 1 stages and another stat lowered by 1 stage at the end of each turn.",
+		shortDesc: "Raises a random stat by 1 and lowers another stat by 1 at the end of each turn.",
+		onResidual: function (pokemon) {
+			let stats = [];
+			let boost = {};
+			for (let statPlus in pokemon.boosts) {
+				if (pokemon.boosts[statPlus] < 6) {
+					stats.push(statPlus);
+				}
+			}
+			let randomStat = stats.length ? stats[this.random(stats.length)] : "";
+			if (randomStat) boost[randomStat] = 1;
+
+			stats = [];
+			for (let statMinus in pokemon.boosts) {
+				if (pokemon.boosts[statMinus] > -6 && statMinus !== randomStat) {
+					stats.push(statMinus);
+				}
+			}
+			randomStat = stats.length ? stats[this.random(stats.length)] : "";
+			if (randomStat) boost[randomStat] = -1;
+
+			this.boost(boost);
+		},
+		rating: 3,
 	},
 };

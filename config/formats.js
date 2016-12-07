@@ -18,6 +18,26 @@ exports.Formats = [
 		ruleset: ['Pokemon', 'Endless Battle Clause', 'Team Preview', 'HP Percentage Mod', 'Species Clause', 'Item Clause'],
 		banlist: ['Illegal', 'Uber', 'Bank-Uber', 'Power Construct'],
 	},
+	{
+		name: "ASDASD Doubles",
+
+		mod: 'asdasd',
+		gameType: 'doubles',
+		ruleset: ['Pokemon', 'Endless Battle Clause', 'Team Preview', 'HP Percentage Mod', 'Species Clause', 'Item Clause'],
+		banlist: ['Illegal', 'Uber', 'Bank-Uber', 'Power Construct'],
+	},
+	{
+		name: "ASDASD Custom",
+
+		mod: 'asdasd',
+		searchShow: false,
+		canUseRandomTeam: true,
+		debug: true,
+		maxLevel: 9999,
+		defaultLevel: 100,
+		// no restrictions, for serious (other than team preview)
+		ruleset: ['Team Preview', 'Cancel Mod'],
+	},
 
 	// SM Singles
 	///////////////////////////////////////////////////////////////////

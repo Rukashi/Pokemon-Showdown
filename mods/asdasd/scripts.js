@@ -65,20 +65,10 @@ exports.BattleScripts = {
 		if (move.multihit) {
 			hits = move.multihit;
 			if (hits.length) {
-				// yes, it's hardcoded... meh
-				if (hits[0] === 2 && hits[1] === 5) {
-					if (this.gen >= 5) {
-						hits = [2, 2, 3, 3, 4, 5][this.random(6)];
-					} else {
-						hits = [2, 2, 2, 3, 3, 3, 4, 5][this.random(8)];
-					}
-				} else {
-					hits = this.random(hits[0], hits[1] + 1);
-				}
+				hits = hits[this.random(hits.length)];
 			}
 			hits = Math.floor(hits);
 		}
-		// calculate true accuracy
 		let accuracy = move.accuracy;
 		let boosts, boost;
 		
@@ -93,6 +83,7 @@ exports.BattleScripts = {
 		for (i = 0; i < hits && target.hp && pokemon.hp; i++) {
 			if (pokemon.status === 'slp' && !(move.sleepUsable || this.getMove(move.sourceEffect).sleepUsable)) break;
 
+			// calculate true accuracy
 			if (move.multiaccuracy || i === 0) {
 				accuracy = move.accuracy;
 				if (accuracy !== true) {

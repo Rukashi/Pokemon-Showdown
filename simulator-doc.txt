@@ -1,4 +1,4 @@
-This is a pseudocode overview of how Pokémon Showdown works - particularly relevant to anyone writing event code.
+﻿This is a pseudocode overview of how Pokémon Showdown works - particularly relevant to anyone writing event code.
 
 (A) = negated by Mold Breaker (and Turboblaze/Teravolt) on abilities only during a move
 (S) = negated by Sheer Force only during a move with a secondary effect
@@ -17,17 +17,17 @@ STEP 2: MOVE USAGE
 	internal execution interruption (charge turn for SolarBeam etc)
 	move start of sub-move (Metronome, Sleep Talk etc)
 	PP deduction
-	STEP 3. MOVE EXECUTION (sub-moves start from here)
-		there is no target
-		internal move failure ("But it failed!")
-		STEP 4. MOVE HIT (happens once per target)
-			move misses
-			external move failure (Protect, Substitute blocked etc)
-			immunity
-			move animation
-			damage
-			other effects
-			secondary effects
+STEP 3. MOVE EXECUTION (sub-moves start from here)
+	there is no target
+	internal move failure ("But it failed!")
+STEP 4. MOVE HIT (happens once per target)
+	move misses
+	external move failure (Protect, Substitute blocked etc)
+	immunity
+	move animation
+	damage
+	other effects
+	secondary effects
 
 === MAIN LOOP ===
 

@@ -44,6 +44,9 @@ exports.BattleMovedex = {
 		},
 	},
 	
+	// Continuous side protection moves
+	//		Better in general
+	
 	// Safeguard
 	// Mist
 	// Lucky Chant
@@ -119,7 +122,8 @@ exports.BattleMovedex = {
 	},
 	"luckychant": {
 		inherit: true,
-		desc: "For 5 turns, the user and its party members cannot be struck by a critical hit. Fails if this move is already in effect for the user's side. Lasts for 8 turns if the user is holding Light Clay.",
+		desc: "For 5 turns, the user and its party members are protected from the secondary effects of opposing Pokemon, and cannot be struck by a critical hit. Fails if this move is already in effect for the user's side. Lasts for 8 turns if the user is holding Light Clay.",
+		shortDesc: "5 turns: party is immune to secondary effects and crits.",
 		effect: {
 			duration: 5,
 			durationCallback: function (target, source, effect) {
@@ -141,6 +145,9 @@ exports.BattleMovedex = {
 			},
 		},
 	},
+	
+	// Stall moves
+	//		Nerfed in general
 	
 	// Substitute
 	//		Substitute is hit before Protect, Detect, King's Shield, Spiky Shield, Baneful Bunker, Quick Guard, Wide Guard
@@ -445,72 +452,74 @@ exports.BattleMovedex = {
 		},
 	},
 	
+	// 2 Turn Moves
+	//		160 Base Power, 100% Accuracy
+	//		Moves with semi-invulnerability turns lose some of their damage in exchange for the added safety
+	
 	// Solar Beam
 	// Solar Blade
-	//		140 Base Power
+	//		160 Base Power
 	"solarbeam": {
 		inherit: true,
 		isViable: true,
-		basePower: 140,
+		basePower: 160,
+		zMovePower: 200,
 	},
 	"solarblade": {
 		inherit: true,
 		isViable: true,
-		basePower: 140,
+		basePower: 160,
+		zMovePower: 200,
 	},
 	
 	// Sky Attack
-	//		140 Base Power, 100% Accuracy, 10 PP, No Secondary Effect
+	//		160 Base Power, 100% Accuracy, 10 PP, No Secondary Effect (Still has increased critical hit rate)
 	"skyattack": {
 		inherit: true,
 		isViable: true,
-		basePower: 140,
+		basePower: 160,
 		accuracy: 100,
 		pp: 10,
 		secondary: null,
+		zMovePower: 200,
 	},
 	
 	// Skull Bash
-	//		140 Base Power
+	//		160 Base Power
 	"skullbash": {
 		inherit: true,
 		isViable: true,
-		basePower: 140,
+		basePower: 160,
+		zMovePower: 200,
 	},
 	
 	// Freeze Shock
 	// Ice Burn
-	//		140 Base Power, 100% Accuracy
+	//		160 Base Power, 100% Accuracy
 	"freezeshock": {
 		inherit: true,
 		isViable: true,
-		basePower: 140,
+		basePower: 160,
 		accuracy: 100,
+		zMovePower: 200,
 	},
 	"iceburn": {
 		inherit: true,
 		isViable: true,
-		basePower: 140,
+		basePower: 160,
 		accuracy: 100,
+		zMovePower: 200,
 	},
 	
 	// Razor Wind
-	//		Flying-type, 100 Base Power, No High Crit rate
+	//		Flying-type, 120 Base Power, No High Crit rate
 	"razorwind": {
 		inherit: true,
 		isViable: true,
-		basePower: 100,
+		basePower: 120,
 		critRatio: 1,
 		type: "Flying",
-	},
-	
-	// Bounce
-	//		100 Base Power, 100% Accuracy
-	"bounce": {
-		inherit: true,
-		isViable: true,
-		basePower: 100,
-		accuracy: 100,
+		zMovePower: 190,
 	},
 	
 	// Fly
@@ -522,18 +531,31 @@ exports.BattleMovedex = {
 		isViable: true,
 		basePower: 120,
 		accuracy: 100,
+		zMovePower: 190,
 	},
 	"dig": {
 		inherit: true,
 		isViable: true,
 		basePower: 120,
 		accuracy: 100,
+		zMovePower: 190,
 	},
 	"dive": {
 		inherit: true,
 		isViable: true,
 		basePower: 120,
 		accuracy: 100,
+		zMovePower: 190,
+	},
+	
+	// Bounce
+	//		100 Base Power, 100% Accuracy
+	"bounce": {
+		inherit: true,
+		isViable: true,
+		basePower: 100,
+		accuracy: 100,
+		zMovePower: 180,
 	},
 	
 	// Shadow Force
@@ -543,6 +565,7 @@ exports.BattleMovedex = {
 		isViable: true,
 		basePower: 100,
 		accuracy: 100,
+		zMovePower: 180,
 	},
 	
 	// Sky Drop
@@ -550,6 +573,7 @@ exports.BattleMovedex = {
 	"skydrop": {
 		inherit: true,
 		basePower: 80,
+		zMovePower: 160,
 	},
 	
 	// Hyper Beam
@@ -565,41 +589,49 @@ exports.BattleMovedex = {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
+		zMovePower: 200,
 	},
 	"gigaimpact": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
+		zMovePower: 200,
 	},
 	"blastburn": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
+		zMovePower: 200,
 	},
 	"frenzyplant": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
+		zMovePower: 200,
 	},
 	"hydrocannon": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
+		zMovePower: 200,
 	},
 	"prismaticlaser": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
+		zMovePower: 200,
 	},
 	"rockwrecker": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
+		zMovePower: 200,
 	},
 	"roaroftime": {
 		inherit: true,
 		basePower: 160,
 		accuracy: 100,
+		zMovePower: 200,
 	},
 	
 	// Roar
@@ -614,42 +646,43 @@ exports.BattleMovedex = {
 		accuracy: true,
 	},
 	
-	// Bonemerang
-	// Double Hit
-	// Double Kick
-	// Dual Chop
-	// Gear Grind
-	// Wing Attack
-	//		Hits 2 Times, 40 Base Power, 100% Accuracy, 15 PP
+	// 2 Hit Moves
+	//		Wing Attack is now a 2 Hit Move
+	//		40 Base Power, 100% Accuracy, 15 PP
 	"bonemerang": {
 		inherit: true,
 		basePower: 40,
 		accuracy: 100,
 		pp: 15,
+		zMovePower: 100,
 	},
 	"doublehit": {
 		inherit: true,
 		basePower: 40,
 		accuracy: 100,
 		pp: 15,
+		zMovePower: 100,
 	},
 	"doublekick": {
 		inherit: true,
 		basePower: 40,
 		accuracy: 100,
 		pp: 15,
+		zMovePower: 100,
 	},
 	"dualchop": {
 		inherit: true,
 		basePower: 40,
 		accuracy: 100,
 		pp: 15,
+		zMovePower: 100,
 	},
 	"geargrind": {
 		inherit: true,
 		basePower: 40,
 		accuracy: 100,
 		pp: 15,
+		zMovePower: 100,
 	},
 	"wingattack": {
 		inherit: true,
@@ -657,19 +690,21 @@ exports.BattleMovedex = {
 		accuracy: 100,
 		pp: 15,
 		multihit: 2,
+		zMovePower: 100,
 	},
 	
 	// Twineedle
-	//		Hits 2 Times, 30 Base Power, 100% Accuracy, 10 PP, 30% Poison Chance per Hit
+	//		Hits 2 Times, 40 Base Power, 100% Accuracy, 10 PP, 30% Poison Chance per Hit
 	"twineedle": {
 		inherit: true,
-		basePower: 30,
+		basePower: 40,
 		accuracy: 100,
 		pp: 10,
 		secondary: {
 			chance: 30,
 			status: 'psn',
 		},
+		zMovePower: 100,
 	},
 	
 	// 2-5 Multihit Moves
@@ -688,6 +723,7 @@ exports.BattleMovedex = {
 		multiaccuracy: true,
 		tryAllHits: true,
 		pp: 30,
+		zMovePower: 100,
 	},
 	"barrage": {
 		inherit: true,
@@ -697,6 +733,7 @@ exports.BattleMovedex = {
 		multiaccuracy: true,
 		tryAllHits: true,
 		pp: 30,
+		zMovePower: 100,
 	},
 	"doubleslap": {
 		inherit: true,
@@ -706,6 +743,7 @@ exports.BattleMovedex = {
 		multiaccuracy: true,
 		tryAllHits: true,
 		pp: 30,
+		zMovePower: 100,
 	},
 	"furyattack": {
 		inherit: true,
@@ -715,6 +753,7 @@ exports.BattleMovedex = {
 		multiaccuracy: true,
 		tryAllHits: true,
 		pp: 30,
+		zMovePower: 100,
 	},
 	
 	// Bone Rush
@@ -729,6 +768,7 @@ exports.BattleMovedex = {
 		multiaccuracy: true,
 		tryAllHits: true,
 		pp: 20,
+		zMovePower: 100,
 	},
 	"cometpunch": {
 		inherit: true,
@@ -738,6 +778,7 @@ exports.BattleMovedex = {
 		multiaccuracy: true,
 		tryAllHits: true,
 		pp: 20,
+		zMovePower: 100,
 	},
 	"furyswipes": {
 		inherit: true,
@@ -747,6 +788,7 @@ exports.BattleMovedex = {
 		multiaccuracy: true,
 		tryAllHits: true,
 		pp: 20,
+		zMovePower: 100,
 	},
 	
 	// Bullet Seed
@@ -763,6 +805,7 @@ exports.BattleMovedex = {
 		multiaccuracy: true,
 		tryAllHits: true,
 		pp: 15,
+		zMovePower: 100,
 	},
 	"iciclespear": {
 		inherit: true,
@@ -772,6 +815,7 @@ exports.BattleMovedex = {
 		multiaccuracy: true,
 		tryAllHits: true,
 		pp: 15,
+		zMovePower: 100,
 	},
 	"pinmissile": {
 		inherit: true,
@@ -781,6 +825,7 @@ exports.BattleMovedex = {
 		multiaccuracy: true,
 		tryAllHits: true,
 		pp: 15,
+		zMovePower: 100,
 	},
 	"rockblast": {
 		inherit: true,
@@ -790,6 +835,7 @@ exports.BattleMovedex = {
 		multiaccuracy: true,
 		tryAllHits: true,
 		pp: 15,
+		zMovePower: 100,
 	},
 	"spikecannon": {
 		inherit: true,
@@ -799,6 +845,7 @@ exports.BattleMovedex = {
 		multiaccuracy: true,
 		tryAllHits: true,
 		pp: 15,
+		zMovePower: 100,
 	},
 	
 	// Tail Slap
@@ -811,6 +858,7 @@ exports.BattleMovedex = {
 		multiaccuracy: true,
 		tryAllHits: true,
 		pp: 10,
+		zMovePower: 100,
 	},
 	
 	// Water Shuriken
@@ -830,18 +878,20 @@ exports.BattleMovedex = {
 			}
 			return move.basePower;
 		},
+		zMovePower: 100,
 	},
 	
 	// Triple Kick
 	//		15 Base Power
 	"triplekick": {
 		inherit: true,
+		desc: "Hits three times. Power increases to 30 for the second hit and 45 for the third. This move checks accuracy for each hit, and the attack ends if the target avoids any of the hits. If one of the hits breaks the target's substitute, it will take damage for the remaining hits. If the user has the Ability Skill Link, this move will always hit three times.",
 		basePower: 15,
 		basePowerCallback: function (pokemon) {
 			pokemon.addVolatile('triplekick');
 			return 15 * pokemon.volatiles['triplekick'].hit;
 		},
-		desc: "Hits three times. Power increases to 30 for the second hit and 45 for the third. This move checks accuracy for each hit, and the attack ends if the target avoids any of the hits. If one of the hits breaks the target's substitute, it will take damage for the remaining hits. If the user has the Ability Skill Link, this move will always hit three times.",
+		zMovePower: 100,
 	},
 	
 	// Beat Up
@@ -854,6 +904,7 @@ exports.BattleMovedex = {
 			return 5 + Math.floor(pokemon.side.pokemon[pokemon.volatiles.beatup.index].template.baseStats.atk / 5);
 		},
 		pp: 5,
+		zMovePower: 100,
 	},
 	
 	// Draining Moves
@@ -872,18 +923,21 @@ exports.BattleMovedex = {
 		shortDesc: "User recovers 50% of the damage dealt.",
 		basePower: 80,
 		drain: [1, 2],
+		zMovePower: 160,
 	},
 	"drainpunch": {
 		inherit: true,
 		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
 		basePower: 80,
 		drain: [1, 2],
+		zMovePower: 160,
 	},
 	"gigadrain": {
 		inherit: true,
 		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
 		basePower: 80,
 		drain: [1, 2],
+		zMovePower: 160,
 	},
 	
 	"hornleech": {
@@ -891,18 +945,21 @@ exports.BattleMovedex = {
 		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
 		basePower: 80,
 		drain: [1, 2],
+		zMovePower: 160,
 	},
 	"leechlife": {
 		inherit: true,
 		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
 		basePower: 80,
 		drain: [1, 2],
+		zMovePower: 160,
 	},
 	"paraboliccharge": {
 		inherit: true,
 		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
 		basePower: 80,
 		drain: [1, 2],
+		zMovePower: 160,
 	},
 	
 	// Mega Drain
@@ -912,6 +969,7 @@ exports.BattleMovedex = {
 		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
 		basePower: 60,
 		drain: [1, 2],
+		zMovePower: 120,
 	},
 	
 	// Dream Eater
@@ -921,6 +979,7 @@ exports.BattleMovedex = {
 		desc: "The target is unaffected by this move unless it is asleep. The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
 		basePower: 120,
 		drain: [1, 2],
+		zMovePower: 190,
 	},
 	
 	// Absorb
@@ -937,10 +996,11 @@ exports.BattleMovedex = {
 		shortDesc: "2x Power if foe afflicted by Leech Seed; Recovers 75% of the damage dealt.",
 		pp: 20,
 		drain: [3, 4],
+		zMovePower: 100,
 	},
 	
 	// Oblivion Wing
-	//		80 Base Power, Drains 100% of Damage Dealt
+	//		Drains 100% of Damage Dealt
 	"oblivionwing": {
 		inherit: true,
 		desc: "The user recovers all the HP lost by the target. If Big Root is held by the user, the HP recovered is 1.5x normal, rounded half down.",
@@ -1022,6 +1082,7 @@ exports.BattleMovedex = {
 			chance: 100,
 			volatileStatus: 'flinch',
 		},
+		zMovePower: 100,
 	},
 	
 	// Spite
@@ -1070,78 +1131,6 @@ exports.BattleMovedex = {
 		},
 	},
 	
-	// Charge Beam
-	//		40 Base Power, 100% Accuracy, 100% Chance to increase the user's Special Attack by 1 Stage
-	"chargebeam": {
-		inherit: true,
-		accuracy: 100,
-		basePower: 40,
-		desc: "Has a 100% chance to raise the user's Special Attack by 1 stage.",
-		shortDesc: "100% chance to raise the user's Sp. Atk by 1.",
-		secondary: {
-			chance: 100,
-			self: {
-				boosts: {
-					spa: 1,
-				},
-			},
-		},
-	},
-	// Power-Up Punch
-	//		10 PP
-	"poweruppunch": {
-		inherit: true,
-		pp: 10,
-	},
-	
-	// Jump Kick
-	//		90% Accuracy
-	"jumpkick": {
-		inherit: true,
-		accuracy: 90,
-	},
-	
-	// High Jump Kick
-	//		80% Accuracy
-	"highjumpkick": {
-		inherit: true,
-		accuracy: 80,
-	},
-	
-	// Close Combat
-	// Focus Blast
-	//		100 Base Power
-	"closecombat": {
-		inherit: true,
-		basePower: 100,
-	},
-	"focusblast": {
-		inherit: true,
-		basePower: 100,
-	},
-	
-	// Dizzy Punch
-	//		50% Chance to cause Confusion
-	"dizzypunch": {
-		inherit: true,
-		basePower: 80,
-		secondary: {
-			chance: 50,
-			volatileStatus: 'confusion',
-		},
-	},
-	
-	// Relic Song
-	//		80 Base Power, 30% Sleep Chance
-	"relicsong": {
-		inherit: true,
-		basePower: 80,
-		secondary: {
-			chance: 30,
-			status: 'slp',
-		},
-	},
-	
 	// Knock Off
 	//		70 Base Power, no longer deals increased damage when removing an item
 	//		Attempts to remove the target's item regardless of whether the user has fainted or not
@@ -1158,6 +1147,7 @@ exports.BattleMovedex = {
 				this.add('-enditem', target, item.name, '[from] move: Knock Off', '[of] ' + source);
 			}
 		},
+		zMovePower: 140,
 	},
 	
 	// Covet
@@ -1194,6 +1184,7 @@ exports.BattleMovedex = {
 			}
 			this.add('-item', source, yourItem, '[from] move: Covet', '[of] ' + target);
 		},
+		zMovePower: 140,
 	},
 	"thief": {
 		inherit: true,
@@ -1224,75 +1215,70 @@ exports.BattleMovedex = {
 			}
 			this.add('-item', source, yourItem, '[from] move: Thief', '[of] ' + target);
 		},
+		zMovePower: 140,
 	},
 	
-	// Snore
-	//		90 Base Power
-	"snore": {
-		inherit: true,
-		basePower: 90,
-	},
-	
-	// Aerial Ace
-	// Feint Attack
-	// Shadow Punch
-	// Magnet Bomb
-	// Magical Leaf
-	// Shock Wave
-	// Smart Strike
-	// Swift
-	// Disarming Voice
-	// Aura Sphere
-	//		80 Base Power
+	// Perfect Accuracy Moves
+	//		80 Base Power, except Clear Smog due to secondary effect
 	"aerialace": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
+		zMovePower: 160,
 	},
 	"feintattack": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
+		zMovePower: 160,
 	},
 	"shadowpunch": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
+		zMovePower: 160,
 	},
 	"magnetbomb": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
+		zMovePower: 160,
 	},
 	"magicalleaf": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
+		zMovePower: 160,
 	},
 	"shockwave": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
+		zMovePower: 160,
 	},
 	"smartstrike": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
+		zMovePower: 160,
 	},
 	"swift": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
+		zMovePower: 160,
 	},
 	"disarmingvoice": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
+		zMovePower: 160,
 	},
 	"aurasphere": {
 		inherit: true,
 		isViable: true,
 		basePower: 80,
+		zMovePower: 160,
 	},
 	
 	// Clear Smog
@@ -1301,6 +1287,193 @@ exports.BattleMovedex = {
 		inherit: true,
 		isViable: true,
 		basePower: 65,
+		zMovePower: 120,
+	},
+	
+	// Status-inducing Moves
+	//		Multiple changes
+	
+	// Toxic
+	//		Fix, due to scripts.js changes
+	"toxic": {
+		inherit: true,
+		desc: "Badly poisons the target. If a Poison-type Pokemon uses this move, the target cannot avoid the attack.",
+		onModifyMove: function (move, source) {
+			if (source.hasType('Poison')) {
+				move.accuracy = true;
+			}
+		},
+	},
+	
+	// Thunder Wave
+	//		Perfect accuracy when used by Electric-type Pokemon
+	"thunderwave": {
+		inherit: true,
+		desc: "Paralyzes the target. If an Electric-type Pokemon uses this move, the target cannot avoid the attack.",
+		onModifyMove: function (move, source) {
+			if (source.hasType('Electric')) {
+				move.accuracy = true;
+			}
+		},
+	},
+	
+	// Will-o-Wisp
+	//		Is now a Ghost-type Move
+	//		90% Accuracy, perfect accuracy when used by Ghost-type Pokemon
+	"willowisp": {
+		inherit: true,
+		desc: "Burns the target. If a Ghost-type Pokemon uses this move, the target cannot avoid the attack.",
+		accuracy: 90,
+		type: "Ghost",
+		onModifyMove: function (move, source) {
+			if (source.hasType('Ghost')) {
+				move.accuracy = true;
+			}
+		},
+	},
+	
+	// Dark Void
+	// Hypnosis
+	//		60% Accuracy
+	"darkvoid": {
+		inherit: true,
+		accuracy: 60,
+	},
+	"hypnosis": {
+		inherit: true,
+		accuracy: 60,
+	},
+	
+	// Sing
+	//		70% Accuracy
+	"sing": {
+		inherit: true,
+		accuracy: 70,
+	},
+	
+	// Lovely Kiss
+	//		80% Accuracy
+	"lovelykiss": {
+		inherit: true,
+		accuracy: 80,
+	},
+	
+	// Grass Whistle
+	// Spore
+	//		90% Accuracy
+	
+	"grasswhistle": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"spore": {
+		inherit: true,
+		accuracy: 90,
+	},
+	
+	// Poison Powder
+	// Sleep Powder
+	// Stun Spore
+	//		70% Accuracy, 10 PP, +1 Priority, fails if the user isn't a Grass- or Bug-type Pokemon
+	//		Poison Powder is now a Grass-type Move
+	//		Indirect buff to Overcoat and Safety Goggles
+	"poisonpowder": {
+		inherit: true,
+		desc: "Poisons the target. Usually goes first. Fails if the user isn't a Grass- or Bug-type Pokemon.",
+		shortDesc: "Poisons the target. Fails if user isn't Grass or Bug.",
+		accuracy: 70,
+		pp: 10,
+		type: "Grass",
+		priority: 1,
+		onTryHit: function (target, source) {
+			if (!source.hasType('Grass') && !source.hasType('Bug')) return false;
+		},
+		isViable: true,
+	},
+	"sleeppowder": {
+		inherit: true,
+		desc: "Causes the target to fall asleep. Usually goes first. Fails if the user isn't a Grass- or Bug-type Pokemon.",
+		shortDesc: "Puts the target to sleep. Fails if user isn't Grass or Bug.",
+		accuracy: 70,
+		pp: 10,
+		priority: 1,
+		onTryHit: function (target, source) {
+			if (!source.hasType('Grass') && !source.hasType('Bug')) return false;
+		},
+		isViable: true,
+	},
+	"stunspore": {
+		inherit: true,
+		desc: "Paralyzes the target. Usually goes first. Fails if the user isn't a Grass- or Bug-type Pokemon.",
+		shortDesc: "Paralyzes the target. Fails if user isn't Grass or Bug.",
+		accuracy: 70,
+		pp: 10,
+		priority: 1,
+		onTryHit: function (target, source) {
+			if (!source.hasType('Grass') && !source.hasType('Bug')) return false;
+		},
+		isViable: true,
+	},
+	
+	// Supersonic
+	//		70% Accuracy
+	"supersonic": {
+		inherit: true,
+		accuracy: 70,
+	},
+	
+	// Sweet Kiss
+	//		80% Accuracy
+	"sweetkiss": {
+		inherit: true,
+		accuracy: 80,
+	},
+	
+	// Confuse Ray
+	//		90% Accuracy
+	"confuseray": {
+		inherit: true,
+		accuracy: 90,
+	},
+	
+	// Flatter
+	// Swagger
+	//		100% Accuracy
+	"flatter": {
+		inherit: true,
+		accuracy: 100,
+	},
+	"swagger": {
+		inherit: true,
+		accuracy: 100,
+	},
+	
+	// Medium-sized Changes
+	//		Quite a few of them
+	
+	// Charge Beam
+	//		40 Base Power, 100% Accuracy, 100% Chance to increase the user's Special Attack by 1 Stage (Basically a Special Power-up Punch)
+	"chargebeam": {
+		inherit: true,
+		accuracy: 100,
+		basePower: 40,
+		desc: "Has a 100% chance to raise the user's Special Attack by 1 stage.",
+		shortDesc: "100% chance to raise the user's Sp. Atk by 1.",
+		secondary: {
+			chance: 100,
+			self: {
+				boosts: {
+					spa: 1,
+				},
+			},
+		},
+		zMovePower: 100,
+	},
+	// Power-Up Punch
+	//		10 PP
+	"poweruppunch": {
+		inherit: true,
+		pp: 10,
 	},
 	
 	// Water Sport
@@ -1315,6 +1488,78 @@ exports.BattleMovedex = {
 		inherit: true,
 		isViable: true,
 		priority: 2,
+	},
+	
+	// Dizzy Punch
+	//		50% Chance to cause Confusion
+	"dizzypunch": {
+		inherit: true,
+		basePower: 80,
+		secondary: {
+			chance: 50,
+			volatileStatus: 'confusion',
+		},
+		zMovePower: 160,
+	},
+	
+	// Relic Song
+	//		80 Base Power, 30% Sleep Chance
+	"relicsong": {
+		inherit: true,
+		basePower: 80,
+		secondary: {
+			chance: 30,
+			status: 'slp',
+		},
+		zMovePower: 160,
+	},
+	
+	// Cut
+	//		60 Base Power, 50% Chance to decrease the target's Defense by 1 Stage
+	"cut": {
+		inherit: true,
+		basePower: 60,
+		accuracy: 100,
+		secondary: {
+			chance: 50,
+			boosts: {
+				def: -1,
+			},
+		},
+		zMovePower: 120,
+	},
+	
+	// Rock Smash
+	//		60 Base Power
+	"rocksmash": {
+		inherit: true,
+		basePower: 60,
+		zMovePower: 120,
+	},
+	
+	// Strength
+	//		30% Chance to increase the user's Attack by 1 Stage
+	"strength": {
+		inherit: true,
+		secondary: {
+			chance: 30,
+			self: {
+				boosts: {
+					atk: 1,
+				},
+			},
+		},
+	},
+	
+	// Smaller Changes
+	//		A lot of them
+	
+	// Snore
+	//		90 Base Power
+	"snore": {
+		inherit: true,
+		basePower: 90,
+		zMovePower: 175,
 	},
 	
 	// Blizzard
@@ -1336,108 +1581,25 @@ exports.BattleMovedex = {
 		},
 	},
 	
-	// Cut
-	//		60 Base Power, 50% Chance to decrease the target's Defense by 1 Stage
-	"cut": {
-		inherit: true,
-		basePower: 60,
-		accuracy: 100,
-		secondary: {
-			chance: 50,
-			boosts: {
-				def: -1,
-			},
-		},
-	},
-	
-	// Rock Smash
-	//		60 Base Power
-	"rocksmash": {
-		inherit: true,
-		basePower: 60,
-	},
-	
-	// Strength
-	//		30% Chance to increase the user's Attack by 1 Stage
-	"strength": {
-		inherit: true,
-		secondary: {
-			chance: 30,
-			self: {
-				boosts: {
-					atk: 1,
-				},
-			},
-		},
-	},
-	
-	// Grass Whistle
-	// Sing
-	//		70% Accuracy
-	"grasswhistle": {
-		inherit: true,
-		accuracy: 70,
-	},
-	"sing": {
-		inherit: true,
-		accuracy: 70,
-	},
-	
-	// Supersonic
-	// Confuse Ray
-	//		90% Accuracy
-	"supersonic": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"confuseray": {
-		inherit: true,
-		accuracy: 90,
-	},
-	
-	// Many Moves
-	//		Accuracy Rounded up to multiples of 10%
-	"boneclub": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"razorshell": {
-		inherit: true,
-		accuracy: 100,
-	},
-	"drillrun": {
-		inherit: true,
-		accuracy: 100,
-	},
-	"vcreate": {
-		inherit: true,
-		accuracy: 100,
-	},
+	// Aeroblast
+	// Air Cutter
+	// Air Slash
+	// Crush Claw
+	// Diamond Storm
+	// Drill Run
+	// Flying Press
+	// Metal Claw
+	// Razor Leaf
+	// Razor Shell
+	// Rock Slide
+	// Rock Tomb
+	// Sacred Fire
+	// Snarl
+	// Spacial Rend
+	// String Shot
+	// V-Create
+	//		100% Accuracy
 	"aeroblast": {
-		inherit: true,
-		accuracy: 100,
-	},
-	"sacredfire": {
-		inherit: true,
-		accuracy: 100,
-	},
-	"spacialrend": {
-		inherit: true,
-		accuracy: 100,
-	},
-	"originpulse": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"precipiceblades": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"airslash": {
-		inherit: true,
-		accuracy: 100,
-	},
-	"rockslide": {
 		inherit: true,
 		accuracy: 100,
 	},
@@ -1445,11 +1607,7 @@ exports.BattleMovedex = {
 		inherit: true,
 		accuracy: 100,
 	},
-	"furycutter": {
-		inherit: true,
-		accuracy: 100,
-	},
-	"flyingpress": {
+	"airslash": {
 		inherit: true,
 		accuracy: 100,
 	},
@@ -1457,11 +1615,15 @@ exports.BattleMovedex = {
 		inherit: true,
 		accuracy: 100,
 	},
-	"razorleaf": {
+	"diamondstorm": {
 		inherit: true,
 		accuracy: 100,
 	},
-	"stringshot": {
+	"drillrun": {
+		inherit: true,
+		accuracy: 100,
+	},
+	"flyingpress": {
 		inherit: true,
 		accuracy: 100,
 	},
@@ -1469,7 +1631,23 @@ exports.BattleMovedex = {
 		inherit: true,
 		accuracy: 100,
 	},
-	"diamondstorm": {
+	"razorleaf": {
+		inherit: true,
+		accuracy: 100,
+	},
+	"razorshell": {
+		inherit: true,
+		accuracy: 100,
+	},
+	"rockslide": {
+		inherit: true,
+		accuracy: 100,
+	},
+	"rocktomb": {
+		inherit: true,
+		accuracy: 100,
+	},
+	"sacredfire": {
 		inherit: true,
 		accuracy: 100,
 	},
@@ -1477,23 +1655,45 @@ exports.BattleMovedex = {
 		inherit: true,
 		accuracy: 100,
 	},
-	"powerwhip": {
+	"spacialrend": {
 		inherit: true,
-		accuracy: 90,
+		accuracy: 100,
 	},
-	"seedflare": {
+	"stringshot": {
 		inherit: true,
-		accuracy: 90,
+		accuracy: 100,
 	},
-	"willowisp": {
+	"vcreate": {
 		inherit: true,
-		accuracy: 90,
+		accuracy: 100,
 	},
-	"meteormash": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"boltstrike": {
+	
+	// Bind
+	// Blue Flare
+	// Bolt Strike
+	// Bone Club
+	// Clamp
+	// Fire Spin
+	// Fury Cutter
+	// Jump Kick
+	// Megahorn
+	// Mega Punch
+	// Metal Sound
+	// Meteor Mash
+	// Mirror Shot
+	// Mud Bomb
+	// Origin Pulse
+	// Power Whip
+	// Precipice Blades
+	// Rock Climb
+	// Rolling Kick
+	// Sand Tomb
+	// Screech
+	// Seed Flare
+	// Takedown
+	// Whirlpool
+	//		90% Accuracy
+	"bind": {
 		inherit: true,
 		accuracy: 90,
 	},
@@ -1501,15 +1701,112 @@ exports.BattleMovedex = {
 		inherit: true,
 		accuracy: 90,
 	},
+	"boltstrike": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"boneclub": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"clamp": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"firespin": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"furycutter": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"jumpkick": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"megahorn": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"megapunch": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"metalsound": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"meteormash": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"mirrorshot": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"mudbomb": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"originpulse": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"powerwhip": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"precipiceblades": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"rockclimb": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"rollingkick": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"sandtomb": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"screech": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"seedflare": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"takedown": {
+		inherit: true,
+		accuracy: 90,
+	},
+	"whirlpool": {
+		inherit: true,
+		accuracy: 90,
+	},
+	
+	// Dragon Rush
+	// Fire Blast
+	// High Jump Kick
+	// Iron Tail
+	// Magma Storm
+	// Mega Kick
+	// Slam
+	//		80% Accuracy
 	"dragonrush": {
 		inherit: true,
 		accuracy: 80,
 	},
-	"rocktomb": {
-		inherit: true,
-		accuracy: 100,
-	},
 	"fireblast": {
+		inherit: true,
+		accuracy: 80,
+	},
+	"highjumpkick": {
 		inherit: true,
 		accuracy: 80,
 	},
@@ -1521,14 +1818,6 @@ exports.BattleMovedex = {
 		inherit: true,
 		accuracy: 80,
 	},
-	"megahorn": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"megapunch": {
-		inherit: true,
-		accuracy: 90,
-	},
 	"megakick": {
 		inherit: true,
 		accuracy: 80,
@@ -1536,84 +1825,5 @@ exports.BattleMovedex = {
 	"slam": {
 		inherit: true,
 		accuracy: 80,
-	},
-	"rollingkick": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"takedown": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"mudbomb": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"mirrorshot": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"rockclimb": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"poisonpowder": {
-		inherit: true,
-		accuracy: 80,
-	},
-	"stunspore": {
-		inherit: true,
-		accuracy: 80,
-	},
-	"sleeppowder": {
-		inherit: true,
-		accuracy: 80,
-	},
-	"sweetkiss": {
-		inherit: true,
-		accuracy: 80,
-	},
-	"lovelykiss": {
-		inherit: true,
-		accuracy: 80,
-	},
-	"whirlpool": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"firespin": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"clamp": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"sandtomb": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"bind": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"screech": {
-		inherit: true,
-		accuracy: 90,
-	},
-	"metalsound": {
-		inherit: true,
-		accuracy: 90,
-	},
-	
-	// Toxic
-	//		Fix, due to scripts.js changes
-	"toxic": {
-		inherit: true,
-		onModifyMove: function (move, source) {
-			if (source.hasType('Poison')) {
-				move.accuracy = true;
-			}
-		},
 	},
 };
