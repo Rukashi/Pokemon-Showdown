@@ -71,7 +71,7 @@ exports.BattleFormatsData = {
 		tier: "RU",
 	},
 	blastoisemega: {
-		randomBattleMoves: ["icebeam", "hydropump", "rapidspin", "scald", "toxic", "dragontail", "darkpulse", "aurasphere"],
+		randomBattleMoves: ["icebeam", "hydropump", "rapidspin", "scald", "dragontail", "darkpulse", "aurasphere"],
 		randomDoubleBattleMoves: ["muddywater", "icebeam", "hydropump", "fakeout", "scald", "darkpulse", "aurasphere", "followme", "icywind", "protect"],
 		requiredItem: "Blastoisinite",
 		tier: "UU",
@@ -1340,7 +1340,7 @@ exports.BattleFormatsData = {
 	quagsire: {
 		randomBattleMoves: ["recover", "earthquake", "scald", "toxic", "encore", "icebeam"],
 		randomDoubleBattleMoves: ["icywind", "earthquake", "waterfall", "scald", "rockslide", "curse", "yawn", "icepunch", "protect"],
-		tier: "PU",
+		tier: "BL4",
 	},
 	murkrow: {
 		inherit: true,
@@ -2203,7 +2203,7 @@ exports.BattleFormatsData = {
 		tier: "LC",
 	},
 	armaldo: {
-		randomBattleMoves: ["stealthrock", "stoneedge", "toxic", "xscissor", "swordsdance", "knockoff", "rapidspin"],
+		randomBattleMoves: ["stealthrock", "stoneedge", "toxic", "xscissor", "knockoff", "rapidspin", "earthquake"],
 		randomDoubleBattleMoves: ["rockslide", "stoneedge", "stringshot", "xscissor", "swordsdance", "knockoff", "protect"],
 		tier: "PU",
 	},
@@ -2705,7 +2705,7 @@ exports.BattleFormatsData = {
 		tier: "PU",
 	},
 	lopunnymega: {
-		randomBattleMoves: ["return", "highjumpkick", "substitute", "thunderpunch", "icepunch"],
+		randomBattleMoves: ["return", "highjumpkick", "substitute", "fakeout", "icepunch"],
 		randomDoubleBattleMoves: ["return", "highjumpkick", "protect", "fakeout", "icepunch", "encore"],
 		requiredItem: "Lopunnite",
 		tier: "OU",
